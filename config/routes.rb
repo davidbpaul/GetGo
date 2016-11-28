@@ -7,4 +7,5 @@ Rails.application.routes.draw do
   get '/logout' => 'sessions#destroy'
   # get '/signup' => 'users#new'
   post '/users' => 'users#create'
+  get '/visitor' => 'visitor#index'
 end
