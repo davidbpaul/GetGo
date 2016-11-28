@@ -25,7 +25,7 @@ $(function() {
         }, 1500, 'easeInOutExpo');
         event.preventDefault();
     });
-});
+
 
 // Closes the Responsive Menu on Menu Item Click
 $('.navbar-collapse ul li a').click(function() {
@@ -75,4 +75,5 @@ $('.tab a').on('click', function (e) {
 
   $(target).fadeIn(600);
 
+});
 });

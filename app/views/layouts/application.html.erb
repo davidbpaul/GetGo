@@ -41,7 +41,9 @@
                       </li>
                       <li>
                           <%#= link_to "Login", controller: "sessions", action: "new" %>
+                          <% if !current_user %>
                           <%= link_to "Login", controller: "sessions", action: "new", "data-toggle" => "modal", 'data-target' => '#login' %>
+                          <%  end %>
                       </li>
                       <li>
                           <a class="page-scroll" href="#about">About</a>

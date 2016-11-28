@@ -1,8 +1,8 @@
 <div class="auth-form">
 
     <ul class="tab-group">
-      <li class="tab active"><a href="#login">Log In</a></li>
-      <li class="tab"><a href="#signup">Sign Up</a></li>
+      <li class="tab active" data-content="login"><a href="#login">Log In</a></li>
+      <li class="tab"><a  class="tab_link" href="#signup">Sign Up</a></li>
     </ul>
 
     <div class="tab-content">
@@ -33,11 +33,7 @@
           <div class="top-row">
             <div class="field-wrap">
               <label>First Name<span class="req">*</span></label>
-              <%= f.text_field :first_name, :required => true, :autocomplete => :off %>
-            </div>
-            <div class="field-wrap">
-              <label>Last Name<span class="req">*</span></label>
-              <%= f.text_field :last_name, :required => true, :autocomplete => :off %>
+              <%= f.text_field :name, :required => true, :autocomplete => :off %>
             </div>
           </div>
           <div class="field-wrap">
