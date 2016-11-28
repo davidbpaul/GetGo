@@ -27,7 +27,7 @@
                       <i class="fa fa-play-circle"></i> <span class="light">Get</span> Go
                       <% if current_user %>
                         | Welcome, <%= current_user.first_name %>
-                        <%= link_to "Logout", '/logout', class: 'btn btn-warning' %>
+                        <%#= link_to "Logout", '/logout', class: 'btn btn-warning' %>
                       <% end %>
                       <!-- <span><%= image_tag('GO-logo.png', width: '30') %></span> <span class="light">Get</span> Go -->
                   </a>
@@ -39,11 +39,16 @@
                       <li class="hidden">
                           <a href="#page-top"></a>
                       </li>
-                      <!-- <li>
+                      <li>
                           <%#= link_to "Login", "data-toggle" => "modal", 'data-target' => '#login' %>
                           <%#= link_to "Login", login_path, class: "page-scroll" %>
+                          <% if current_user %>
+                            <%= link_to "Logout", '/logout' %>
+                          <% else %>
+                            <%= link_to "Login", '/login' %>
+                          <% end %>
 
-                      </li> -->
+                      </li>
                       <li>
                           <a class="page-scroll" href="#about">About</a>
                       </li>
