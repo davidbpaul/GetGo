@@ -8,4 +8,5 @@ Rails.application.routes.draw do
   # get '/signup' => 'users#new'
   post '/users' => 'users#create'
   get '/visitor' => 'visitor#index'
+  post './visitor' => 'visitor#something'
 end
