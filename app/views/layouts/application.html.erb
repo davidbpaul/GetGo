@@ -19,39 +19,44 @@
   <body id="page-top" data-spy="scroll" data-target=".navbar-fixed-top">
       <nav class="navbar navbar-custom navbar-fixed-top" role="navigation">
           <div class="container">
-              <div class="navbar-header">
-                  <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-main-collapse">
-                      Menu <i class="fa fa-bars"></i>
-                  </button>
-                  <a class="navbar-brand page-scroll" href="/">
-                      <i class="fa fa-play-circle"></i> <span class="light">Get</span> Go
-                      <% if current_user %>
-                        | Welcome, <%= current_user.first_name %>
-                        <%= link_to "Logout", '/logout', class: 'btn btn-warning' %>
-                      <% end %>
-                      <!-- <span><%= image_tag('GO-logo.png', width: '30') %></span> <span class="light">Get</span> Go -->
-                  </a>
-              </div>
-              <!-- Collect the nav links, forms, and other content for toggling -->
-              <div class="collapse navbar-collapse navbar-right navbar-main-collapse">
-                  <ul class="nav navbar-nav">
-                      <!-- Hidden li included to remove active class from about link when scrolled up past about section -->
-                      <li class="hidden">
-                          <a href="#page-top"></a>
-                      </li>
-                      <!-- <li>
-                          <%#= link_to "Login", "data-toggle" => "modal", 'data-target' => '#login' %>
-                          <%#= link_to "Login", login_path, class: "page-scroll" %>
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-main-collapse">
+                    Menu <i class="fa fa-bars"></i>
+                </button>
+                <a class="navbar-brand page-scroll" href="/">
+                    <i class="fa fa-play-circle"></i> <span class="light">Get</span> Go
+                    <% if current_user %>
+                      | Welcome, <%= current_user.first_name %>
+                      <%#= link_to "Logout", '/logout', class: 'btn btn-warning' %>
+                    <% end %>
+                    <!-- <span><%= image_tag('GO-logo.png', width: '30') %></span> <span class="light">Get</span> Go -->
+                </a>
+            </div>
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse navbar-right navbar-main-collapse">
+                <ul class="nav navbar-nav">
+                    <!-- Hidden li included to remove active class from about link when scrolled up past about section -->
+                    <li class="hidden">
+                        <a href="#page-top"></a>
+                    </li>
+                    <li>
+                        <%#= link_to "Login", "data-toggle" => "modal", 'data-target' => '#login' %>
+                        <%#= link_to "Login", login_path, class: "page-scroll" %>
+                        <% if current_user %>
+                          <%= link_to "Logout", '/logout' %>
+                        <% else %>
+                          <%= link_to "Login", '/login' %>
+                        <% end %>
 
-                      </li> -->
-                      <li>
-                          <a class="page-scroll" href="#about">About</a>
-                      </li>
-                      <li>
-                          <a class="page-scroll" href="#contact">Contact</a>
-                      </li>
-                  </ul>
-              </div>
+                    </li>
+                    <li>
+                        <a class="page-scroll" href="#about">About</a>
+                    </li>
+                    <li>
+                        <a class="page-scroll" href="#contact">Contact</a>
+                    </li>
+                </ul>
+            </div>
               <!-- /.navbar-collapse -->
           </div>
           <!-- /.container -->
