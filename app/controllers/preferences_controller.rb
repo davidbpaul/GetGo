@@ -1,6 +1,8 @@
 # class PreferencesController
 class PreferencesController < ApplicationController
   def show
+    @user = User.find params[:user_id]
+    @preference = @user.preference
   end
 
   def new
@@ -10,7 +12,7 @@ class PreferencesController < ApplicationController
   end
 
   def create
-    @user = User.find(current_user.id)
+    @user = User.find(:user_id)
     @preference = @user.preference.new(preference_params)
 
     if @preference.save
@@ -21,9 +23,21 @@ class PreferencesController < ApplicationController
   end
 
   def update
+    # @new_route = ..
+    # @new_from_stop = ..
+    # @new_to_stop = ..
+    # @user = User.find(:user_id)
+    # @preference = @user.preference
+    # @preference.route = @new_route
+    # @preference.from_stop = @new_from_stop
+    # @preference.to_stop = @new_to_stop
   end
 
   def destroy
+    @user = User.find params[:user_id]
+    @preference = @user.preference
+    @preference.destroy
+    redirect_to schedules_path
   end
 
   private
