@@ -1,0 +1,12 @@
+<div class="jumbotron">
+  <h1>preferences#show</h1>
+  <% if user_preference %>
+    <!-- shows saved preference  -->
+    <%= link_to "Edit", edit_user_preference_path, class: "btn btn-primary" %>
+    <%= link_to "Delete", user_preference_path, class: "btn btn-success", method: :delete, data: { confirm: "Are you sure?" } %>
+  <% else %>
+    <%= link_to "Create", new_user_preference_path, class: "btn btn-primary" %>
+    <%= link_to "Delete", user_preference_path, class: "btn btn-success", method: :delete, data: { confirm: "Are you sure?" } %>
+
+  <% end %>
+</div>

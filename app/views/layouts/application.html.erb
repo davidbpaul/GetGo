@@ -40,15 +40,17 @@
                         <a href="#page-top"></a>
                     </li>
                     <li>
-                        <%#= link_to "Login", "data-toggle" => "modal", 'data-target' => '#login' %>
-                        <%#= link_to "Login", login_path, class: "page-scroll" %>
                         <% if current_user %>
-                          <%= link_to "Logout", '/logout' %>
+                          <%= link_to "Logout", logout_path %>
                         <% else %>
-                          <%= link_to "Login", '/login' %>
+                          <%= link_to "Login", login_path, method: "GET" %>
                         <% end %>
-
                     </li>
+                    <% if current_user %>
+                      <li>
+                        <%= link_to "Preference", user_preference_path(user_id: current_user.id), class: "page-scroll" %>
+                      </li>
+                    <% end %>
                     <li>
                         <a class="page-scroll" href="#about">About</a>
                     </li>

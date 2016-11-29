@@ -1,0 +1,60 @@
+<div class="auth-form">
+
+    <ul class="tab-group">
+      <li class="tab"><a href="#login">Log In</a></li>
+      <li class="tab active"><a href="#signup">Sign Up</a></li>
+    </ul>
+
+    <div class="tab-content">
+      <div id="login">
+        <h1>Welcome Back!</h1>
+        <% if flash[:notice] %>
+          <div class="alert alert-danger"><%= flash[:notice] %></div>
+        <% end %>
+        <%= form_tag '/login' do %>
+          <div class="field-wrap">
+            <label>Email Address<span class="req">*</span></label>
+            <%= email_field_tag :email, nil, :required => true, :autocomplete => :off %>
+          </div>
+          <div class="field-wrap">
+            <label>Password<span class="req">*</span></label>
+            <%= password_field_tag :password, nil, :required => true, :autocomplete => :off %>
+          </div>
+          <%= submit_tag "Log In", :class => "button button-block" %>
+        <% end %>
+      </div>
+
+      <div id="signup">
+        <h1>Sign Up for Free</h1>
+        <% if flash[:notice] %>
+          <div class="alert alert-danger"><%= flash[:notice] %></div>
+        <% end %>
+        <%= form_for :user, url: '/users' do |f| %>
+          <div class="top-row">
+            <div class="field-wrap">
+              <label>First Name<span class="req">*</span></label>
+              <%= f.text_field :first_name, :required => true, :autocomplete => :off %>
+            </div>
+            <div class="field-wrap">
+              <label>Last Name<span class="req">*</span></label>
+              <%= f.text_field :last_name, :required => true, :autocomplete => :off %>
+            </div>
+          </div>
+          <div class="field-wrap">
+            <label>Email Address<span class="req">*</span></label>
+            <%= f.email_field :email, :required => true, :autocomplete => :off %>
+          </div>
+          <div class="field-wrap">
+            <label>Password<span class="req">*</span></label>
+            <%= f.password_field :password, :required => true, :autocomplete => :off %>
+          </div>
+          <div class="field-wrap">
+            <label>Password Confirmation<span class="req">*</span></label>
+            <%= f.password_field :password_confirmation, :required => true, :autocomplete => :off %>
+          </div>
+          <%= f.submit "Get Started", :class => "button button-block" %>
+        <% end %>
+      </div>
+    </div><!-- tab-content -->
+
+</div> <!-- /form -->

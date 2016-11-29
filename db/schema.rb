@@ -17,6 +17,7 @@ ActiveRecord::Schema.define(version: 20161127063224) do
 
   create_table "preferences", force: :cascade do |t|
     t.integer  "user_id"
+    t.string   "route"
     t.string   "from_stop"
     t.string   "to_stop"
     t.datetime "created_at", null: false
