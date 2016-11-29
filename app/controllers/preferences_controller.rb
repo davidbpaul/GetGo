@@ -6,6 +6,14 @@ class PreferencesController < ApplicationController
   end
 
   def new
+    url = 'https://getgo-api.herokuapp.com/agencies/GO/routes'
+    response = HTTParty.get(url)
+    response_body = JSON.parse response.body
+    @routes = []
+    response_body['routes'].each do |route|
+      option = route['id'] + ' ' + route['long_name']
+      @routes << [option, route['id']]
+    end
   end
 
   def edit

@@ -1,6 +1,14 @@
 <div class="jumbotron">
-  <%= form_for :preference do |f| %>
+  <%#= @response %>
+  <%#= @routes %>
+  <%= form_tag(controller: "preferences", action: "create", method: "post") do %>
 
-    <%= f.submit "Save", class: "btn btn-success" %>
+
+    <%= label_tag(:select_route_label, "Select a route:") %>
+    <%= select_tag(:select_route, options_for_select(@routes)) %>
+
+    <%= submit_tag "Submit form", class: "btn btn-success" %>
   <% end %>
+
+
 </div>
