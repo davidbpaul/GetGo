@@ -8,4 +8,10 @@ Rails.application.routes.draw do
   # get '/signup' => 'users#new'
   post '/users' => 'users#create'
   get '/visitor' => 'visitor#index'
+
+  get 'departure/index'
+  post 'departure/index'
+  post 'departure/getUserDateAndRoute'
+  post 'departure/getRouteVariant'
+  post 'departure/getFromToStops'
 end

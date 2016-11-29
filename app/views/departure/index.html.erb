@@ -1,0 +1,17 @@
+
+<%= form_tag(controller: "departure", action: "getUserDateAndRoute", method: "post") do %>
+  <%= label_tag(:select_date_label, "Pick a date:") %>
+  <%= select_date Date.today, prefix: :start_date %>
+  </br>
+
+  <%= label_tag(:select_route_label, "Select a route:") %>
+  <%= select_tag(:select_route, options_for_select(@route_values)) %>
+  </br>
+
+  <%= submit_tag("Submit form") %>
+<% end %>
+
+
+<% if @userSelectedRoute %>
+  <%= select_tag(:select_route, options_for_select(@userSelectedRoute)) %>
+<% end %>
