@@ -1,0 +1,11 @@
+
+
+<%= form_tag(controller: "departure", action: "getRouteVariant", method: "post") do %>
+  <%= label_tag(:select_route_variant_label, "Pick a route variant:") %>
+  <%= hidden_field_tag(:select_date, @userSelectedDate) %>
+  <%= hidden_field_tag(:select_route, @userSelectedRoute) %>
+  <%= select_tag(:select_route_variant, options_for_select(@routeVariants)) %>
+  </br>
+
+  <%= submit_tag("Submit form") %>
+<% end %>
