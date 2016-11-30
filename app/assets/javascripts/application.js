@@ -81,3 +81,18 @@ $('.tab a').on('click', function (e) {
   $(target).fadeIn(600);
 
 });
+
+
+
+$('#route_select').on('change', function(ev) {
+  $.ajax({
+    url: "http://localhost:3000/routes/" + this.value,
+    type: "GET"
+  })
+  .done(function (data){
+    console.log(data);
+  })
+  .fail(function (err){
+    console.log(err);
+  })
+})

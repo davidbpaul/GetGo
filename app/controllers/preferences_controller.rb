@@ -14,6 +14,7 @@ class PreferencesController < ApplicationController
       option = route['id'] + ' ' + route['long_name']
       @routes << [option, route['id']]
     end
+
     # routes_url = 'https://getgo-api.herokuapp.com/agencies/GO/routes'
     # routes_response = HTTParty.get(routes_url)
     # routes_body = JSON.parse routes_response.body
