@@ -10,31 +10,10 @@ class DepartureController < ApplicationController
       @route_values << name_and_id
     end
 
-    # if params['param1']
-    #   @userSelectedRoute = param['param1']
-    # end
-
     # ----- Task 2. Get stops from route and date -----
-    # date = '20161202'
-    # route_id = '258-21'
-    # route_variant = '21D'
-    # stops = getStops(getTrips(date, route_id, route_variant)[0])
-    # @stop_values = []
-    # stops.each do |stop|
-    #   name_and_id = []
-    #   name_and_id += [stop['name'], stop['id']]
-    #   @stop_values << name_and_id
-    # end
 
     # ----- Task 3. Get stop_times from toStop, fromStop, date, and time -----
-    toStop = "01436"    # "Streetsville GO Station Parking Lot"
-    fromStop = "USBT"   # "Union Station Bus Terminal"
-    date = '20161202'
-    route_id = '258-21'
-    route_variant = '21D'
 
-
-    # getArrivalTimes(date, route_id, route_variant, toStop, fromStop)
   end
 
   def getUserDateAndRoute
@@ -203,6 +182,7 @@ class DepartureController < ApplicationController
     return departureTimes
 
   end
+
   def getDepartureTimes (date, route_id, route_variant, toStop, fromStop)
     tripsArray = getTrips(date, route_id, route_variant)
 
@@ -240,14 +220,14 @@ class DepartureController < ApplicationController
     allTrainsNotDeparted = []
 
     arrivalTimes.each do |arrive|
-      arriveDT = (DateTime.strptime(arrive, "%H:%M:%S") + 5.hours - 1.day).in_time_zone("Eastern Time (US & Canada)")
+      arriveDT = (DateTime.strptime(arrive, "%H:%M:%S") + 5.hours).in_time_zone("Eastern Time (US & Canada)")
       allTrains << arriveDT
       if arriveDT.to_i > timeNow.to_i
         allTrainsNotDeparted << arriveDT
       end
     end
 
-    return allTrainsNotDeparted, allTrains
+    return allTrainsNotDeparted.reverse, allTrains.reverse
 
   end
 end
