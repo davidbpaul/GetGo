@@ -13,5 +13,10 @@ Rails.application.routes.draw do
   end
 
   # resources :preferences
-  resources :schedules, only: :index
+  # resources :schedules, only: :index
+  get 'schedules/index'
+  post 'schedules/index'
+  post 'schedules/getUserDateAndRoute'
+  post 'schedules/getRouteVariant'
+  post 'schedules/getFromToStops'
 end

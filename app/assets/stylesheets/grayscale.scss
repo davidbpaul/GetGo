@@ -328,3 +328,93 @@ img::-moz-selection {
 body {
     -webkit-tap-highlight-color: rgba(white, 0.2);
 }
+
+.team-member {
+  text-align: center;
+  margin-bottom: 50px;
+}
+.team-member img {
+  margin: 0 auto;
+  border: 7px solid white;
+}
+.team-member h4 {
+  margin-top: 25px;
+  margin-bottom: 0;
+  text-transform: none;
+}
+.team-member p {
+  margin-top: 0;
+}
+ul.social-buttons {
+  margin-bottom: 0;
+}
+ul.social-buttons li a {
+  display: block;
+  background-color: #222222;
+  height: 40px;
+  width: 40px;
+  border-radius: 100%;
+  font-size: 20px;
+  line-height: 40px;
+  color: white;
+  outline: none;
+  -webkit-transition: all 0.3s;
+  -moz-transition: all 0.3s;
+  transition: all 0.3s;
+}
+ul.social-buttons li a:hover,
+ul.social-buttons li a:focus,
+ul.social-buttons li a:active {
+  background-color: #fed136;
+}
+.btn:focus,
+.btn:active,
+.btn.active,
+.btn:active:focus {
+  outline: none;
+}
+img::selection {
+  background: transparent;
+}
+img::-moz-selection {
+  background: transparent;
+}
+
+#team{
+  width: 100%;
+  padding: 50px 0;
+  // background: image-url('downloads-bg.jpg') no-repeat center center scroll;
+  color: black;
+  background-color:   #f9f8f4;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  background-size: cover;
+  -o-background-size: cover;
+}
+
+#stuff{
+  width: 100%;
+  padding: 50px 0;
+  color: #1c293f;
+  // background: image-url('downloads-bg.jpg') no-repeat center center scroll;
+  border-top: solid  #1c293f;
+  background-color:   #f9f8f4;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  background-size: cover;
+  -o-background-size: cover;
+
+}
+#about{
+  width: 100%;
+  padding: 50px 0;
+  color: #1c293f;
+  // background: image-url('downloads-bg.jpg') no-repeat center center scroll;
+  border-top: solid  #1c293f;
+  background-color:   #f9f8f4;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  background-size: cover;
+  -o-background-size: cover;
+
+}

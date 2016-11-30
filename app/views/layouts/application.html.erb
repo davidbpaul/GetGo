@@ -58,6 +58,12 @@
                         <a class="page-scroll" href="#about">About</a>
                     </li>
                     <li>
+                        <a class="page-scroll" href="#download">Download</a>
+                    </li>
+                    <li>
+                        <a class="page-scroll" href="#team">Team</a>
+                    </li>
+                    <li>
                         <a class="page-scroll" href="#contact">Contact</a>
                     </li>
                 </ul>
@@ -81,59 +87,149 @@
       </header>
 
       <!-- About Section -->
-      <section id="about" class="container content-section text-center">
-          <div class="row">
+      <section id="about" class="container content-section text-center" style="padding-top:40px;">
+          <div class="row" style="margin-top:0;">
               <div class="col-lg-8 col-lg-offset-2">
-                  <h2>About GetGo</h2>
-                  <p>Grayscale is a free Bootstrap 3 theme created by Start Bootstrap. It can be yours right now, simply download the template on <a href="http://startbootstrap.com/template-overviews/grayscale/">the preview page</a>. The theme is open source, and you can use it for any purpose, personal or commercial.</p>
-                  <p>This theme features stock photos by <a href="http://gratisography.com/">Gratisography</a> along with a custom Google Maps skin courtesy of <a href="http://snazzymaps.com/">Snazzy Maps</a>.</p>
-                  <p>Grayscale includes full HTML, CSS, and custom JavaScript files along with LESS files for easy customization.</p>
+                <h2>About GetGo</h2>
+                <p>Tired of rushing though countless pages that could be more scrambled then the eggs you had for breakfast just to find out the train you where supposed to be on left 30 second’s ago? </p>
+                <p> GetGO was made to prevent that very scenario by giving everyday commuters the ability to set the route they take every day and travel with ease.</p>
+                <p><strong> Why put yourself through the extra stress. Get GetGO.</strong></p>
               </div>
           </div>
       </section>
+      <!-- Comparison Section -->
+      <section id="stuff"
+      class="container content-section text-center"
+      style="
+       padding-top:40px;
+        margin:auto;
 
+        ">
+        <div class="row">
+          <div class="col-sm-4" style="margin-left:20px;margin-right:100px;width:50%; margin-top:100px;">
+              <div class="team-member">
+              <!-- <img src="../assets/img/bad1.png" alt="bad"> -->
+              <%= image_tag('map.png', width: '100%') %>
+              </div>
+        </div>
+            <div class="col-sm-4">
+                <div class="team-member">
+                <h2 >Go Tranist Website</h2>
+                <!-- <img src="../assets/img/bad1.png" alt="bad"> -->
+                <%= image_tag('bad1.png', width: '100%' ) %>
+                </div>
+                  <div class="team-member">
+                <h2>GetGO</h2>
+                  <!-- <img src="../assets/img/bad1.png" alt="bad"> -->
+                  <%= image_tag('bad1.png', width: '100%') %>
+              </div>
+              </div>
+          </div>
+      </section>
       <!-- Download Section -->
-      <!-- <section id="download" class="content-section text-center">
+      <section id="download" class="text-center"style="margin:0">
           <div class="download-section">
               <div class="container">
                   <div class="col-lg-8 col-lg-offset-2">
-                      <h2>Download Grayscale</h2>
-                      <p>You can download Grayscale for free on the preview page at Start Bootstrap.</p>
-                      <a href="http://startbootstrap.com/template-overviews/grayscale/" class="btn btn-default btn-lg">Visit Download Page</a>
+                      <h2>Download App</h2>
+                      <p>You can download GetGO for free on ios or android.</p>
+                      <a href="" class="btn btn-default btn-lg">Visit Download Page</a>
                   </div>
               </div>
           </div>
-      </section> -->
+      </section>
+      <!-- Team Section -->
+      <section id="team" class="bg-light-gray">
+        <div class="container">
+             <div class="row">
+                 <div class="col-lg-12 text-center">
+                     <h2 class="section-heading">Our Team</h2>
+                 </div>
+             </div>
+             <div class="row">
+                 <div class="col-sm-4">
+                     <div class="team-member">
+
+                         <img class="img-responsive img-circle" alt="">
+                            <%= image_tag('david.png', width: '100%') %>
+                       </img>
+                         <h4>DAVID PAUL</h4>
+                         <p class="text-muted">Developer</p>
+                         <ul class="list-inline social-buttons">
+                             <li><a href="#"><i class="fa fa-twitter"></i></a>
+                             </li>
+                             <li><a href="#"><i class="fa fa-facebook"></i></a>
+                             </li>
+                             <li><a href="#"><i class="fa fa-linkedin"></i></a>
+                             </li>
+                         </ul>
+                     </div>
+                 </div>
+                 <div class="col-sm-4">
+                     <div class="team-member">
+                         <img class="img-responsive img-circle" alt="">
+                            <%= image_tag('tai.png', width: '100%') %>
+                          </img>
+                         <h4>TAE YOUNG KIM</h4>
+                         <p class="text-muted">Developer</p>
+                         <ul class="list-inline social-buttons">
+                             <li><a href="#"><i class="fa fa-twitter"></i></a>
+                             </li>
+                             <li><a href="#"><i class="fa fa-facebook"></i></a>
+                             </li>
+                             <li><a href="#"><i class="fa fa-linkedin"></i></a>
+                             </li>
+                         </ul>
+                     </div>
+                 </div>
+                 <div class="col-sm-4">
+                     <div class="team-member">
+                       <img class="img-responsive img-circle" alt="">
+                          <%= image_tag('clive.png', width: '100%') %>
+                        </img>
+                         <h4>CLIVE YIP</h4>
+                         <p class="text-muted">Developer</p>
+                         <ul class="list-inline social-buttons">
+                             <li><a href="#"><i class="fa fa-twitter"></i></a>
+                             </li>
+                             <li><a href="#"><i class="fa fa-facebook"></i></a>
+                             </li>
+                             <li><a href="#"><i class="fa fa-linkedin"></i></a>
+                             </li>
+                         </ul>
+                     </div>
+                 </div>
+             </div>
+         </div>
+      </section>
 
       <!-- Contact Section -->
       <section id="contact" class="container content-section text-center">
           <div class="row">
               <div class="col-lg-8 col-lg-offset-2">
-                  <h2>Contact Start Bootstrap</h2>
-                  <p>Feel free to email us to provide some feedback on our templates, give us suggestions for new templates and themes, or to just say hello!</p>
-                  <p><a href="mailto:feedback@startbootstrap.com">feedback@startbootstrap.com</a>
+                  <h2>Contact GetGO</h2>
+                  <p>Feel free to email us to provide some feedback, or just say hello!</p>
+                  <p><a href="mailto:feedback@startbootstrap.com">feedback@GetGO.com</a>
                   </p>
                   <ul class="list-inline banner-social-buttons">
                       <li>
-                          <a href="https://twitter.com/SBootstrap" class="btn btn-default btn-lg"><i class="fa fa-twitter fa-fw"></i> <span class="network-name">Twitter</span></a>
+                          <a href="" class="btn btn-default btn-lg"><i class="fa fa-twitter fa-fw"></i> <span class="network-name">Twitter</span></a>
                       </li>
                       <li>
-                          <a href="https://github.com/IronSummitMedia/startbootstrap" class="btn btn-default btn-lg"><i class="fa fa-github fa-fw"></i> <span class="network-name">Github</span></a>
+                          <a href="" class="btn btn-default btn-lg"><i class="fa fa-github fa-fw"></i> <span class="network-name">Github</span></a>
                       </li>
                       <li>
-                          <a href="https://plus.google.com/+Startbootstrap/posts" class="btn btn-default btn-lg"><i class="fa fa-google-plus fa-fw"></i> <span class="network-name">Google+</span></a>
+                          <a href="" class="btn btn-default btn-lg"><i class="fa fa-google-plus fa-fw"></i> <span class="network-name">Google+</span></a>
                       </li>
                   </ul>
               </div>
           </div>
-      </section>
-
-      <!-- Footer -->
-      <footer>
-          <div class="container text-center">
-              <p>Copyright &copy; Your Website 2016</p>
-          </div>
-      </footer>
+          <footer>
+              <div class="container text-center">
+                  <p>Copyright &copy; GetGO 2016</p>
+              </div>
+          </footer>
+        </section>
       <%= javascript_include_tag "application", "data-turbolinks-track" => "reload" %>
     </body>
 

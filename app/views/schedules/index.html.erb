@@ -1,9 +1,13 @@
-<div class="jumbotron">
-  <h1>schedules#index</h1>
-
-  <!-- <ul> -->
-    <%# schedules.each do |schedule| %>
-      <!-- <li><%#= schedule %></li> -->
-    <%# end %>
-  <!-- </ul> -->
+<div class="jumbotron" style="background-color:#1c293f; border:solid #f9f8f4">
+    <div class="form-group">
+      <%= form_tag(controller: "schedules", action: "getUserDateAndRoute", method: "post") do %>
+      <%= label_tag(:select_date_label, "Pick a date:") %>
+      <%= select_date Date.today, {prefix: :start_date}, {class: "form-control"} %>
+      </br>
+      <%= label_tag(:select_route_label, "Select a route:") %>
+      <%= select_tag(:select_route, options_for_select(@route_values), {class: "form-control"}) %>
+      </br>
+      <%= submit_tag("Submit form", {class: "btn btn-primary btn-lg outline"}) %>
+      <% end %>
+    </div>
 </div>
