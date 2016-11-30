@@ -14,19 +14,22 @@ class PreferencesController < ApplicationController
       option = route['id'] + ' ' + route['long_name']
       @routes << [option, route['id']]
     end
+    # routes_url = 'https://getgo-api.herokuapp.com/agencies/GO/routes'
+    # routes_response = HTTParty.get(routes_url)
+    # routes_body = JSON.parse routes_response.body
   end
 
   def edit
   end
 
   def create
-    @user = current_user
-
-    @preference = Preference.find_or_initialize_by(user_id: @user.id)
-    @preference.attributes = preference_params
-    @preference.save
-
-    @schedule = [{ name: "blah"}]
+    # @user = current_user
+    #
+    # @preference = Preference.find_or_initialize_by(user_id: @user.id)
+    # @preference.attributes = preference_params
+    # @preference.save
+    #
+    # @schedule = [{ name: "blah"}]
 
 
       # redirect_to schedules_path, notice: 'Preference added!'
