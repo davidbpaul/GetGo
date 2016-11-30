@@ -1,13 +1,29 @@
 
 <div class="jumbotron" style="background-color:#1c293f; border:solid #f9f8f4">
   <p> The current time is: <%= @timenow %> </p>
-  <p> Next Train/Bus arrives at: </p>
-  <%= @allTrainsNotDeparted[0] %>
 
-  <p> Next 3 Trains/Buses arrive at: </p>
-  <%= @allTrainsNotDeparted[0] %>
-  <%= @allTrainsNotDeparted[1] %>
-  <%= @allTrainsNotDeparted[2] %>
+  <table class="table">
+    <tr>
+      <th>#</th>
+      <th>Next Train(s) leaving origin: <%= @userSelectedFromStop %></th>
+      <th>Time arriving at destination: <%= @userSelectedToStop %></th>
+    </tr>
+    <tr>
+      <td class="active">1</td>
+      <td class="active"><%= @allTrainsNotDeparted[0] %></td>
+      <td class="active"><%= @allTrainsNotDeparted[0] %></td>
+    </tr>
+    <tr>
+      <td>2</td>
+      <td><%= @allTrainsNotDeparted[1] %></td>
+      <td><%= @allTrainsNotDeparted[1] %></td>
+    </tr>
+    <tr>
+      <td>3</td>
+      <td><%= @allTrainsNotDeparted[2] %></td>
+      <td><%= @allTrainsNotDeparted[2] %></td>
+    </tr>
+  </table>
 
   <p> Full schedule: </p>
   <% @allTrains.each do |element| %>
