@@ -67,6 +67,10 @@ class DepartureController < ApplicationController
     @userSelectedFromStop = params['select_from_stop']
     @arrivalTimes = getArrivalTimes(@userSelectedDate, @userSelectedRoute, @userSelectedRouteVariant, @userSelectedToStop, @userSelectedFromStop)
     @departureTimes = getDepartureTimes(@userSelectedDate, @userSelectedRoute, @userSelectedRouteVariant, @userSelectedToStop, @userSelectedFromStop)
+
+    @timenow = DateTime.now.in_time_zone("Eastern Time (US & Canada)")
+
+    @allTrainsNotDeparted, @allTrains = getFirstThreeTrains(@arrivalTimes, @timenow)
     render 'arrival-times'
   end
 
@@ -228,5 +232,22 @@ class DepartureController < ApplicationController
     puts arrivalTimes
     puts tripId
     return arrivalTimes
+  end
+
+  def getFirstThreeTrains(arrivalTimes, timeNow)
+
+    allTrains = []
+    allTrainsNotDeparted = []
+
+    arrivalTimes.each do |arrive|
+      arriveDT = (DateTime.strptime(arrive, "%H:%M:%S") + 5.hours - 1.day).in_time_zone("Eastern Time (US & Canada)")
+      allTrains << arriveDT
+      if arriveDT.to_i > timeNow.to_i
+        allTrainsNotDeparted << arriveDT
+      end
+    end
+
+    return allTrainsNotDeparted, allTrains
+
   end
 end

@@ -1,16 +1,16 @@
 <div class="jumbotron" style="background-color:#1c293f; border:solid #f9f8f4">
     <div class="form-group">
       <%= form_tag(controller: "departure", action: "getFromToStops", method: "post") do %>
-      <%= hidden_field_tag(:select_date, @userSelectedDate) %>
-      <%= hidden_field_tag(:select_route, @userSelectedRoute) %>
-      <%= hidden_field_tag(:select_route_variant, @userSelectedRouteVariant) %>
-        <%= label_tag(:select_from_stop_label, "Pick a route variant:") %>
-      <%= select_tag(:select_from_stop, options_for_select(@stop_values), {class:"form-control"}) %>
-      </br>
-      <%= label_tag(:select_to_stop_label, "Pick a route variant:") %>
-      <%= select_tag(:select_to_stop, options_for_select(@stop_values), {class:"form-control"}) %>
-      </br>
-      <%= submit_tag("Submit form", {class: "btn btn-primary btn-lg outline"}) %>
+        <%= hidden_field_tag(:select_date, @userSelectedDate) %>
+        <%= hidden_field_tag(:select_route, @userSelectedRoute) %>
+        <%= hidden_field_tag(:select_route_variant, @userSelectedRouteVariant) %>
+        <%= label_tag(:select_from_stop_label, "Select Origin Station:") %>
+        <%= select_tag(:select_from_stop, options_for_select(@stop_values), {class:"form-control"}) %>
+        </br>
+        <%= label_tag(:select_to_stop_label, "Select Destination Station:") %>
+        <%= select_tag(:select_to_stop, options_for_select(@stop_values), {class:"form-control"}) %>
+        </br>
+        <%= submit_tag("Submit form", {class: "btn btn-primary btn-lg outline"}) %>
       <% end %>
     </div>
 </div>
