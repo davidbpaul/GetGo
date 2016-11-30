@@ -66,7 +66,17 @@ class DepartureController < ApplicationController
     @userSelectedToStop = params['select_to_stop']
     @userSelectedFromStop = params['select_from_stop']
     @arrivalTimes = getArrivalTimes(@userSelectedDate, @userSelectedRoute, @userSelectedRouteVariant, @userSelectedToStop, @userSelectedFromStop)
-
+    puts 'ARRIVAL TIMES'
+    puts @arrivalTimes
+    puts '*************'
+    @departureTimes = getDepartureTimes(@userSelectedDate, @userSelectedRoute, @userSelectedRouteVariant, @userSelectedToStop, @userSelectedFromStop)
+    puts 'DEPARTURE TIMES'
+    puts @departureTimes
+    puts '*************'
+    puts @userSelectedToStop = params['select_to_stop']
+    puts "@@@@@@@@@@@@@"
+    puts @userSelectedFromStop = params['select_from_stop']
+    puts "@@@@@@@@@@@@@"
     render 'arrival-times'
   end
 
@@ -116,7 +126,6 @@ class DepartureController < ApplicationController
     tripsWithCorrectVariant.each do |trip|
       print "Trip_id: ", trip['id'], ",  Route Variant: ", + trip['route_variant'] + ",  Direction: " + trip['direction_id'] + "\n"
     end
-
     return tripsWithCorrectVariant
   end
 
@@ -132,6 +141,7 @@ class DepartureController < ApplicationController
 
     stopNames = []
     puts "---------- Task 2b: Stops names under the specified route variant ----------"
+    puts stopNames
     stopsArray.each do |stop|
       stopNames << stop
     end
@@ -185,6 +195,8 @@ class DepartureController < ApplicationController
     # puts tripsWithCorrectDirection
 
     departureTimes = [];
+    arrivalTimes = []
+    tripId = []
     # Third, for each trip, get the departure_time for the desired stop (by referencing stop_id)
     tripsWithCorrectDirection.each do |trip|
       url = 'https://getgo-api.herokuapp.com/' + '/trips/' + trip['id'] + '/stop_times'
@@ -192,21 +204,64 @@ class DepartureController < ApplicationController
       response = HTTParty.get(url)
       stopTimesHash = JSON.parse(response.body)
       stopTimesArray = stopTimesHash['stop_times']
+
+
+      tripId << stopTimesArray.find { |st| st['stop_id'] == toStop}['id']
+
+
+      arrivalTimes << stopTimesArray.find { |st| st['stop_id'] == toStop}['arrival_time']
+
       departureTimes << stopTimesArray.find { |st| st['stop_id'] == fromStop}['departure_time']
+
+    end
+    puts "fromStop------===="
+    puts tripId
+    puts "toostop------===="
+    puts tdot
+    puts "---------- Task 3c: departure times ----------"
+    puts departureTimes
+    'hhhhhhhhhh'
+    puts arrivalTimes
+    return departureTimes
+
+  end
+  def getDepartureTimes (date, route_id, route_variant, toStop, fromStop)
+
+    tripsArray = getTrips(date, route_id, route_variant)
+
+    direction_id = getDirection(tripsArray[0], toStop, fromStop)
+
+    # get the stop_times from these trips
+
+    puts "---------- Task 3a: direction ----------"
+    puts "direction_id = " + direction_id.to_s
+
+    # Second, get all the trips with the correct direction_id
+    tripsWithCorrectDirection = tripsArray.find_all {
+      |trip| trip['direction_id'] == direction_id.to_s
+    }
+
+    puts "---------- Task 3b: trips with correct direction_id ----------"
+    # puts tripsWithCorrectDirection
+
+    arrivalTimes = [];
+    # Third, for each trip, get the departure_time for the desired stop (by referencing stop_id)
+    tripsWithCorrectDirection.each do |trip|
+        url = 'https://getgo-api.herokuapp.com/' + '/trips/' + trip['id'] + '/stop_times'
+      # https://getgo-api.herokuapp.com/trips/6239-Fri-167/stop_times
+      response = HTTParty.get(url)
+      stopTimesHash = JSON.parse(response.body)
+      stopTimesArray = stopTimesHash['stop_times']
+      "{}{}{}{}{}{}{}{}"
+      puts toStop
+      "{}{}{}{}{}{}{}{}"
+      arrivalTimes << stopTimesArray.find { |st| st['stop_id'] == toStop}['arrival_time']
+
     end
 
 
-    puts "---------- Task 3c: departure times ----------"
-    puts departureTimes
-    return departureTimes
-    # ["08:45:00", "08:18:00", "08:06:00", "07:56:00", "07:45:00", "07:33:00", "07:20:00", "07:03:00", "06:42:00", "06:18:00"]
-
-    # Fourth, compare with current time
-
-    # Time.now.getlocal("-05:00")
-
-    # TODO: take care of bus routes that replace trains in non-rush hours (e.g. Bus 21 for Milton Train)
-    # TODO: test other train route
-
+    puts "---------- Task 3c: arrivalTimes times ----------"
+    puts arrivalTimes
+    return arrivalTimes
   end
 end
