@@ -67,6 +67,10 @@ class DepartureController < ApplicationController
     @userSelectedFromStop = params['select_from_stop']
     @arrivalTimes = getArrivalTimes(@userSelectedDate, @userSelectedRoute, @userSelectedRouteVariant, @userSelectedToStop, @userSelectedFromStop)
 
+    @timenow = DateTime.now.in_time_zone("Eastern Time (US & Canada)")
+
+    @arrivalDateTimes = getFirstThreeTrains(@arrivalTimes, @timenow)
+
     render 'arrival-times'
   end
 
@@ -203,10 +207,28 @@ class DepartureController < ApplicationController
 
     # Fourth, compare with current time
 
-    # Time.now.getlocal("-05:00")
 
     # TODO: take care of bus routes that replace trains in non-rush hours (e.g. Bus 21 for Milton Train)
     # TODO: test other train route
+
+  end
+
+  def getFirstThreeTrains(arrivalTimes, timeNow)
+
+    arrivalDateTimes = []
+    byebug
+    arrivalTimes.each do |arrive|
+      arriveDT = DateTime.strptime(arrive, "%H:%M:%S") - 1.day
+      if arriveDT > timeNow
+        arrivalDateTimes << arriveDT
+      end
+    end
+
+    return arrivalDateTimes
+    # rails c
+    # time9pm = DateTime.strptime("21:00:00", "%H:%M:%S") - 1.day
+    # timenow = DateTime.now.in_time_zone("Eastern Time (US & Canada)")
+    # (timenow.to_i / time9pm.to_i) / 60 / 60
 
   end
 end
