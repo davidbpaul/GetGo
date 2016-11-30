@@ -66,17 +66,7 @@ class DepartureController < ApplicationController
     @userSelectedToStop = params['select_to_stop']
     @userSelectedFromStop = params['select_from_stop']
     @arrivalTimes = getArrivalTimes(@userSelectedDate, @userSelectedRoute, @userSelectedRouteVariant, @userSelectedToStop, @userSelectedFromStop)
-    puts 'ARRIVAL TIMES'
-    puts @arrivalTimes
-    puts '*************'
     @departureTimes = getDepartureTimes(@userSelectedDate, @userSelectedRoute, @userSelectedRouteVariant, @userSelectedToStop, @userSelectedFromStop)
-    puts 'DEPARTURE TIMES'
-    puts @departureTimes
-    puts '*************'
-    puts @userSelectedToStop = params['select_to_stop']
-    puts "@@@@@@@@@@@@@"
-    puts @userSelectedFromStop = params['select_from_stop']
-    puts "@@@@@@@@@@@@@"
     render 'arrival-times'
   end
 
@@ -183,7 +173,7 @@ class DepartureController < ApplicationController
 
     # get the stop_times from these trips
 
-    puts "---------- Task 3a: direction ----------"
+    puts "---------- Task 3d: direction ----------"
     puts "direction_id = " + direction_id.to_s
 
     # Second, get all the trips with the correct direction_id
@@ -191,12 +181,11 @@ class DepartureController < ApplicationController
       |trip| trip['direction_id'] == direction_id.to_s
     }
 
-    puts "---------- Task 3b: trips with correct direction_id ----------"
+    puts "---------- Task 3d: trips with correct direction_id ----------"
     # puts tripsWithCorrectDirection
 
     departureTimes = [];
     arrivalTimes = []
-    tripId = []
     # Third, for each trip, get the departure_time for the desired stop (by referencing stop_id)
     tripsWithCorrectDirection.each do |trip|
       url = 'https://getgo-api.herokuapp.com/' + '/trips/' + trip['id'] + '/stop_times'
@@ -205,46 +194,26 @@ class DepartureController < ApplicationController
       stopTimesHash = JSON.parse(response.body)
       stopTimesArray = stopTimesHash['stop_times']
 
-
-      tripId << stopTimesArray.find { |st| st['stop_id'] == toStop}['id']
-
-
-      arrivalTimes << stopTimesArray.find { |st| st['stop_id'] == toStop}['arrival_time']
-
       departureTimes << stopTimesArray.find { |st| st['stop_id'] == fromStop}['departure_time']
-
     end
-    puts "fromStop------===="
-    puts tripId
-    puts "toostop------===="
-    puts tdot
-    puts "---------- Task 3c: departure times ----------"
-    puts departureTimes
-    'hhhhhhhhhh'
-    puts arrivalTimes
     return departureTimes
 
   end
   def getDepartureTimes (date, route_id, route_variant, toStop, fromStop)
-
     tripsArray = getTrips(date, route_id, route_variant)
 
     direction_id = getDirection(tripsArray[0], toStop, fromStop)
-
     # get the stop_times from these trips
-
-    puts "---------- Task 3a: direction ----------"
+    puts "---------- Task 3d: direction ----------"
     puts "direction_id = " + direction_id.to_s
-
     # Second, get all the trips with the correct direction_id
     tripsWithCorrectDirection = tripsArray.find_all {
       |trip| trip['direction_id'] == direction_id.to_s
     }
-
-    puts "---------- Task 3b: trips with correct direction_id ----------"
+    puts "---------- Task 3d: trips with correct direction_id ----------"
     # puts tripsWithCorrectDirection
-
     arrivalTimes = [];
+    tripId = [];
     # Third, for each trip, get the departure_time for the desired stop (by referencing stop_id)
     tripsWithCorrectDirection.each do |trip|
         url = 'https://getgo-api.herokuapp.com/' + '/trips/' + trip['id'] + '/stop_times'
@@ -252,16 +221,12 @@ class DepartureController < ApplicationController
       response = HTTParty.get(url)
       stopTimesHash = JSON.parse(response.body)
       stopTimesArray = stopTimesHash['stop_times']
-      "{}{}{}{}{}{}{}{}"
-      puts toStop
-      "{}{}{}{}{}{}{}{}"
+      tripId << trip['id']
       arrivalTimes << stopTimesArray.find { |st| st['stop_id'] == toStop}['arrival_time']
-
     end
-
-
-    puts "---------- Task 3c: arrivalTimes times ----------"
+    puts "---------- Task dc: arrivalTimes times ----------"
     puts arrivalTimes
+    puts tripId
     return arrivalTimes
   end
 end
