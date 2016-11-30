@@ -1,6 +1,16 @@
 
 <div class="jumbotron" style="background-color:#1c293f; border:solid #f9f8f4">
-  <% @arrivalDateTimes.each do |element| %>
+  <p> The current time is: <%= @timenow %> </p>
+  <p> Next Train/Bus arrives at: </p>
+  <%= @allTrainsNotDeparted[0] %>
+
+  <p> Next 3 Trains/Buses arrive at: </p>
+  <%= @allTrainsNotDeparted[0] %>
+  <%= @allTrainsNotDeparted[1] %>
+  <%= @allTrainsNotDeparted[2] %>
+
+  <p> Full schedule: </p>
+  <% @allTrains.each do |element| %>
     <li><%= element %></li>
   <% end %>
 </div>

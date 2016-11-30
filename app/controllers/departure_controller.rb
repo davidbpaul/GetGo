@@ -69,7 +69,7 @@ class DepartureController < ApplicationController
 
     @timenow = DateTime.now.in_time_zone("Eastern Time (US & Canada)")
 
-    @arrivalDateTimes = getFirstThreeTrains(@arrivalTimes, @timenow)
+    @allTrainsNotDeparted, @allTrains = getFirstThreeTrains(@arrivalTimes, @timenow)
 
     render 'arrival-times'
   end
@@ -215,20 +215,18 @@ class DepartureController < ApplicationController
 
   def getFirstThreeTrains(arrivalTimes, timeNow)
 
-    arrivalDateTimes = []
-    byebug
+    allTrains = []
+    allTrainsNotDeparted = []
+
     arrivalTimes.each do |arrive|
-      arriveDT = DateTime.strptime(arrive, "%H:%M:%S") - 1.day
-      if arriveDT > timeNow
-        arrivalDateTimes << arriveDT
+      arriveDT = (DateTime.strptime(arrive, "%H:%M:%S") + 5.hours - 1.day).in_time_zone("Eastern Time (US & Canada)")
+      allTrains << arriveDT
+      if arriveDT.to_i > timeNow.to_i
+        allTrainsNotDeparted << arriveDT
       end
     end
 
-    return arrivalDateTimes
-    # rails c
-    # time9pm = DateTime.strptime("21:00:00", "%H:%M:%S") - 1.day
-    # timenow = DateTime.now.in_time_zone("Eastern Time (US & Canada)")
-    # (timenow.to_i / time9pm.to_i) / 60 / 60
+    return allTrainsNotDeparted, allTrains
 
   end
 end
