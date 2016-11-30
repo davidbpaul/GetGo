@@ -1,14 +1,17 @@
-<div class="jumbotron">
+<div class="jumbotron" id="preferred_route">
   <%#= @response %>
   <%#= @routes %>
-  <%= form_tag(controller: "preferences", action: "create", method: "post") do %>
-
-
-    <%= label_tag(:select_route_label, "Select a route:") %>
-    <%= select_tag(:select_route, options_for_select(@routes)) %>
-
+  <%= form_tag({ controller: "preferences", action: "create"}, { method: "post", remote: true }) do %>
+    <%= label_tag('preference[route]', "Select a route:") %>
+    <%= select_tag('preference[route]', options_for_select(@routes)) %>
     <%= submit_tag "Submit form", class: "btn btn-success" %>
   <% end %>
 
-
 </div>
+
+<!-- <script>
+  $("#preferred_route").on("hover", function(){
+    console.log("hovered");
+  });
+
+</script> -->

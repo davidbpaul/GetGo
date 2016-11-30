@@ -6,8 +6,10 @@
 
 //= require jquery
 //= require jquery_ujs
+//= require jquery.easing
 //= require turbolinks
 //= require_tree .
+//= require bootstrap-sprockets
 
 // jQuery to collapse the navbar on scroll
 function collapseNavbar() {

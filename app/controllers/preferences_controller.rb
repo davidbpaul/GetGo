@@ -20,14 +20,19 @@ class PreferencesController < ApplicationController
   end
 
   def create
-    @user = User.find(:user_id)
-    @preference = @user.preference.new(preference_params)
+    @user = current_user
 
-    if @preference.save
-      redirect_to schedules_path, notice: 'Preference added!'
-    else
-      redirect_to new_user_preference_path, notice: 'Please try again'
-    end
+    @preference = Preference.find_or_initialize_by(user_id: @user.id)
+    @preference.attributes = preference_params
+    @preference.save
+
+    @schedule = [{ name: "blah"}]
+
+
+      # redirect_to schedules_path, notice: 'Preference added!'
+    # else
+      # redirect_to new_user_preference_path, notice: 'Please try again'
+    # end
   end
 
   def update
