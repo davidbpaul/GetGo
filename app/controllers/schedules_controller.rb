@@ -89,6 +89,14 @@ class SchedulesController < ApplicationController
 
   def getTrips (date, route_id, route_variant)
     #  First, get all the trips
+
+    # workaround to turn 2016121 to 20161201
+    if (date.length < 8)
+      len = date.length - 1
+      date << date[len]
+      date[len] = "0"
+    end
+
     url = 'https://getgo-api.herokuapp.com/routes/' + route_id + '/trips?date=' + date
     # https://getgo-api.herokuapp.com/routes/258-MI/trips?date=20161202
     response = HTTParty.get(url)
@@ -99,10 +107,10 @@ class SchedulesController < ApplicationController
       |trip| trip['route_variant'] == route_variant
     }
 
-    puts "---------- Task 2a: Trips under the specified route variant ----------"
-    tripsWithCorrectVariant.each do |trip|
-      print "Trip_id: ", trip['id'], ",  Route Variant: ", + trip['route_variant'] + ",  Direction: " + trip['direction_id'] + "\n"
-    end
+    # puts "---------- Task 2a: Trips under the specified route variant ----------"
+    # tripsWithCorrectVariant.each do |trip|
+    #   print "Trip_id: ", trip['id'], ",  Route Variant: ", + trip['route_variant'] + ",  Direction: " + trip['direction_id'] + "\n"
+    # end
     return tripsWithCorrectVariant
   end
 
