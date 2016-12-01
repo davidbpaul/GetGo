@@ -81,20 +81,11 @@ $('.tab a').on('click', function (e) {
   $(target).fadeIn(600);
 
 });
-// 1. Routes 2. RouteVariant 3. Stops
-// Add 2 more disabled select tags
-// Client: On selectOneChange, API call to /routes/:id/trips
-// Server: Takes Route id, loops through to find relevant data
-// Server: Returns data
-// Client: Receives array of data in done() method
-// Client: Loop through array, appending <option> tags with data
 
-// event listener for selectOne
-var route = '';
-var variant = '';
 var fromStop = '';
-var toStop = '';
-
+var stops = [];
+var variantList = [];
+var root = "http://localhost:3000";
 
 function arrayObjectIndexOf(myArray, searchTerm, property) {
     for(var i = 0, len = myArray.length; i < len; i++) {
@@ -103,8 +94,14 @@ function arrayObjectIndexOf(myArray, searchTerm, property) {
     return -1;
 }
 
+// function createRouteElement (route) {
+//   var $option = $('<option></option>').attr('value', route['id']).text(route['name']);
+// }
+
 function createTripElement (trip) {
-  var $option = $('<option></option>').attr('value', trip['id']).text(trip['route_variant']);
+  var $option = $('<option></option>').attr('value', trip['route_variant']).text(trip['route_variant']);
+  //var $option = $('<option></option>').attr({value: trip['route_variant'], trip_id: trip['id']}).text(trip['route_variant']);
+  //var $option = $('<option></option>').attr('value', trip['route_variant']).data('trip-id', trip['id']).text(trip['route_variant']);
   return $option;
 }
 
@@ -113,16 +110,38 @@ function createStopElement (stop) {
   return $option
 }
 
+// $('#preference-button').on('click', function (ev) {
+//   $.ajax({
+//     url: `${root}/agencies/GO/routes`,
+//     type: "GET"
+//   })
+//   .done(function (data) {
+//     var routes = data['routes'];
+//     $('#route_select').empty();
+//     $('#route_select').append($('<option></option>').text('Select a Route'));
+//     routes.forEach(function (route) {
+//       $('#route_select').append(createRouteElement(route));
+//     });
+//   })
+//   .fail(function (err) {
+//     console.log(err);
+//   })
+// });
+
 $('#route_select').on('change', function (ev) {
+  $('#route_variant_select').prop("disabled", true);
+  $('#from_stop_select').prop("disabled", true);
+  $('#to_stop_select').prop("disabled", true);
   $.ajax({
-    url: "http://localhost:3000/routes/" + this.value + "/trips",
+    //url: "http://localhost:3000/routes/" + this.value + "/trips",
+    url: `${root}/routes/${this.value}/trips`,
     type: "GET"
   })
   .done(function (data) {
     var trips = data['trips'];
     $('#route_variant_select').empty();
     $('#route_variant_select').append($('<option></option>').text('Select a Route Number'));
-    var variantList = [];
+    variantList = [];
     trips.forEach(function (trip) {
       if (arrayObjectIndexOf(variantList, trip['route_variant'], 'route_variant') === -1) {
         variantList.push(trip);
@@ -136,11 +155,14 @@ $('#route_select').on('change', function (ev) {
   });
 });
 
-var stops = [];
-
 $('#route_variant_select').on('change', function (ev) {
+  $('#from_stop_select').prop("disabled", true);
+  $('#to_stop_select').prop("disabled", true);
+  var index = arrayObjectIndexOf(variantList, this.value, 'route_variant');
+  var tripId = variantList[index]['id'];
   $.ajax({
-    url: "http://localhost:3000/trips/" + this.value + "/stops",
+    //url: "http://localhost:3000/trips/" + variantList[index]['id'] + "/stops",
+    url: `${root}/trips/${tripId}/stops`,
     type: "GET"
   })
   .done(function (data) {
@@ -158,6 +180,7 @@ $('#route_variant_select').on('change', function (ev) {
 });
 
 $('#from_stop_select').on('change', function (ev) {
+  $('#to_stop_select').prop("disabled", true);
   var from_stop = this.value;
   $('#to_stop_select').empty();
   $('#to_stop_select').append($('<option></option>').text('Select a Destination Stop'));

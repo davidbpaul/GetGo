@@ -1,15 +1,29 @@
 <div class="jumbotron">
-  <h1>preferences#show</h1>
   <% if @preference.nil? %>
-    <p>Wanna create preference?</p>
-    <%= link_to "Create", new_user_preference_path, class: "btn btn-primary" %>
+    <h3>You don't have preference saved. </br>Go create one!</h3>
+    <%= link_to "Create", new_user_preference_path, class: "btn btn-primary", id: "preference-button" %>
   <% else %>
-    <!-- shows saved preference  -->
-    <%= @preference.route %>
-    <%= @preference.from_stop %>
-    <%= @preference.to_stop %>
+    <h3><%= @user.first_name %>'s Preference</h3>
+    <table class="table table-hover">
+      <thead>
+        <tr>
+          <th class="text-center">Route</th>
+          <th class="text-center">Route Number</th>
+          <th class="text-center">From Stop</th>
+          <th class="text-center">To Stop</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><%= @preference.route %></td>
+          <td><%= @preference.route_variant %></td>
+          <td><%= @preference.from_stop %></td>
+          <td><%= @preference.to_stop %></td>
+        </tr>
+      </tbody>
+    </table>
 
     <%= link_to "Edit", edit_user_preference_path, class: "btn btn-primary" %>
-    <%= link_to "Delete", user_preference_path, class: "btn btn-success", method: :delete, data: { confirm: "Are you sure?" } %>
+    <%= link_to "Delete", user_preference_path, class: "btn btn-success", method: :delete %>
   <% end %>
 </div>

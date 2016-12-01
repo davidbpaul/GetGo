@@ -1,3 +1,18 @@
-<div class='Jumbotron'>
-  <h1>preferences#edit</h1>
+<div class="jumbotron">
+  <h2>Edit Your Preference</h2>
+  <%= form_tag({ controller: "preferences", action: "update"}, { method: "post", remote: true, datatype: 'script' }) do %>
+    <div class="form-group">
+      <%= select_tag 'preference[route]', options_for_select(@routes), id: 'route_select', class: 'form-control', include_blank: 'Select a Route' %>
+    </div>
+    <div class="form-group">
+      <%= select_tag 'preference[route_variant]', "<option></option>".html_safe, id: 'route_variant_select', class: 'form-control', disabled: true, include_blank: 'Select Route First!' %>
+    </div>
+    <div class="form-group">
+      <%= select_tag 'preference[from_stop]', "<option></option>".html_safe, id: 'from_stop_select', class: 'form-control', disabled: true, include_blank: "Select Route Number First!" %>
+    </div>
+    <div class="form-group">
+      <%= select_tag 'preference[to_stop]', "<option></option>".html_safe, id: 'to_stop_select', class: 'form-control', disabled: true, include_blank: "Select 'from' Stop First!" %>
+    </div>
+      <%= submit_tag "Submit form", class: "btn btn-success" %>
+  <% end %>
 </div>
