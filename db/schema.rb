@@ -18,10 +18,11 @@ ActiveRecord::Schema.define(version: 20161127063224) do
   create_table "preferences", force: :cascade do |t|
     t.integer  "user_id"
     t.string   "route"
+    t.string   "route_variant"
     t.string   "from_stop"
     t.string   "to_stop"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at",    null: false
+    t.datetime "updated_at",    null: false
     t.index ["user_id"], name: "index_preferences_on_user_id", using: :btree
   end
 

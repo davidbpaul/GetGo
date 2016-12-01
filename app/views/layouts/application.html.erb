@@ -1,56 +1,73 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Getgo</title>
-    <title>Getgo</title>
+    <title>GetGo</title>
     <%= csrf_meta_tags %>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <%= stylesheet_link_tag "https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" %>
-     <%= stylesheet_link_tag "https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic" %>
-     <%= stylesheet_link_tag "https://fonts.googleapis.com/css?family=Montserrat:400,700" %>
-     <%= stylesheet_link_tag "https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" %>
-     <%= stylesheet_link_tag "http://fonts.googleapis.com/css?family=Titillium+Web:400,300,600" %>
-     <%= stylesheet_link_tag "https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css" %>
-     <%= stylesheet_link_tag "application", media: "all", "data-turbolinks-track" => "reload" %>
+    <%#= stylesheet_link_tag "https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" %>
+    <%#= stylesheet_link_tag "https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" %>
+    <%= stylesheet_link_tag "https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic" %>
+    <%= stylesheet_link_tag "https://fonts.googleapis.com/css?family=Montserrat:400,700" %>
+    <%= stylesheet_link_tag "http://fonts.googleapis.com/css?family=Titillium+Web:400,300,600" %>
+    <%= stylesheet_link_tag "https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css" %>
+    <%= stylesheet_link_tag "application", media: "all", "data-turbolinks-track" => "reload" %>
+
+    <%#= javascript_include_tag "https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.3/jquery.easing.min.js" %>
+    <%#= javascript_include_tag "https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" %>
+
   </head>
   <body id="page-top" data-spy="scroll" data-target=".navbar-fixed-top">
       <nav class="navbar navbar-custom navbar-fixed-top" role="navigation">
           <div class="container">
-              <div class="navbar-header">
-                  <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-main-collapse">
-                      Menu <i class="fa fa-bars"></i>
-                  </button>
-                  <a class="navbar-brand page-scroll" href="#page-top">
-                      <i class="fa fa-play-circle"></i> <span class="light">Get</span> Go
-                      <!-- <span><%= image_tag('GO-logo.png', width: '30') %></span> <span class="light">Get</span> Go -->
-                  </a>
-              </div>
-
-              <!-- Collect the nav links, forms, and other content for toggling -->
-              <div class="collapse navbar-collapse navbar-right navbar-main-collapse">
-                  <ul class="nav navbar-nav">
-                      <!-- Hidden li included to remove active class from about link when scrolled up past about section -->
-                      <li class="hidden">
-                          <a href="#page-top"></a>
-                      </li>
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-main-collapse">
+                    Menu <i class="fa fa-bars"></i>
+                </button>
+                <a class="navbar-brand page-scroll" href="/">
+                    <i class="fa fa-play-circle"></i> <span class="light">Get</span> Go
+                    <% if current_user %>
+                      | Welcome, <%= current_user.first_name %>
+                      <%#= link_to "Logout", '/logout', class: 'btn btn-warning' %>
+                    <% end %>
+                    <!-- <span><%= image_tag('GO-logo.png', width: '30') %></span> <span class="light">Get</span> Go -->
+                </a>
+            </div>
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse navbar-right navbar-main-collapse">
+                <ul class="nav navbar-nav">
+                    <!-- Hidden li included to remove active class from about link when scrolled up past about section -->
+                    <li class="hidden">
+                        <a href="#page-top"></a>
+                    </li>
+                    <li>
+                        <% if current_user %>
+                          <%= link_to "Logout", logout_path %>
+                        <% else %>
+                          <%= link_to "Login", login_path, method: "GET" %>
+                        <% end %>
+                    </li>
+                    <% if current_user %>
                       <li>
-                          <%#= link_to "Login", controller: "sessions", action: "new" %>
-                          <%= link_to "Login", controller: "sessions", action: "new", "data-toggle" => "modal", 'data-target' => '#login' %>
+                        <%= link_to "Preference", user_preference_path(current_user), class: "page-scroll" %>
                       </li>
-                      <li>
-                          <a class="page-scroll" href="#about">About</a>
-                      </li>
-                      <!-- <li>
-                          <a class="page-scroll" href="#download">Download</a>
-                      </li> -->
-                      <li>
-                          <a class="page-scroll" href="#contact">Contact</a>
-                      </li>
-                  </ul>
-              </div>
+                    <% end %>
+                    <li>
+                        <a class="page-scroll" href="#about">About</a>
+                    </li>
+                    <li>
+                        <a class="page-scroll" href="#download">Download</a>
+                    </li>
+                    <li>
+                        <a class="page-scroll" href="#team">Team</a>
+                    </li>
+                    <li>
+                        <a class="page-scroll" href="#contact">Contact</a>
+                    </li>
+                </ul>
+            </div>
               <!-- /.navbar-collapse -->
           </div>
           <!-- /.container -->
@@ -62,7 +79,7 @@
               <div class="container">
                   <div class="row">
                       <div class="col-md-8 col-md-offset-2">
-                          <%= yield %>
+                        <%= yield %>
                       </div>
                   </div>
               </div>
@@ -73,10 +90,10 @@
       <section id="about" class="container content-section text-center" style="padding-top:40px;">
           <div class="row" style="margin-top:0;">
               <div class="col-lg-8 col-lg-offset-2">
-                <h2 style="color:black">About GetGo</h2>
-                <p style="color:black">Tired of rushing though countless pages that could be more scrambled then the eggs you had for breakfast just to find out the train you where supposed to be on left 30 second’s ago? </p>
-                <p style="color:black"> GetGO was made to prevent that very scenario by giving everyday commuters the ability to set the route they take every day and travel with ease.</p>
-                <p style="color: #42DCA3"><strong> Why put yourself through the extra stress. Get GetGO.</strong></p>
+                <h2>About GetGo</h2>
+                <p>Tired of rushing though countless pages that could be more scrambled then the eggs you had for breakfast just to find out the train you where supposed to be on left 30 second’s ago? </p>
+                <p> GetGO was made to prevent that very scenario by giving everyday commuters the ability to set the route they take every day and travel with ease.</p>
+                <p><strong> Why put yourself through the extra stress. Get GetGO.</strong></p>
               </div>
           </div>
       </section>
@@ -86,7 +103,6 @@
       style="
        padding-top:40px;
         margin:auto;
-
         ">
         <div class="row">
           <div class="col-sm-4" style="margin-left:20px;margin-right:100px;width:50%; margin-top:100px;">
@@ -122,69 +138,69 @@
           </div>
       </section>
       <!-- Team Section -->
-   <section id="team" class="bg-light-gray">
-       <div class="container">
-           <div class="row">
-               <div class="col-lg-12 text-center">
-                   <h2 class="section-heading">Our Team</h2>
-               </div>
-           </div>
-           <div class="row">
-               <div class="col-sm-4">
-                   <div class="team-member">
+      <section id="team" class="bg-light-gray">
+        <div class="container">
+             <div class="row">
+                 <div class="col-lg-12 text-center">
+                     <h2 class="section-heading">Our Team</h2>
+                 </div>
+             </div>
+             <div class="row">
+                 <div class="col-sm-4">
+                     <div class="team-member">
 
+                         <img class="img-responsive img-circle" alt="">
+                            <%= image_tag('david.png', width: '100%') %>
+                       </img>
+                         <h4>DAVID PAUL</h4>
+                         <p class="text-muted">Developer</p>
+                         <ul class="list-inline social-buttons">
+                             <li><a href="#"><i class="fa fa-twitter"></i></a>
+                             </li>
+                             <li><a href="#"><i class="fa fa-facebook"></i></a>
+                             </li>
+                             <li><a href="#"><i class="fa fa-linkedin"></i></a>
+                             </li>
+                         </ul>
+                     </div>
+                 </div>
+                 <div class="col-sm-4">
+                     <div class="team-member">
+                         <img class="img-responsive img-circle" alt="">
+                            <%= image_tag('tai.png', width: '100%') %>
+                          </img>
+                         <h4>TAE YOUNG KIM</h4>
+                         <p class="text-muted">Developer</p>
+                         <ul class="list-inline social-buttons">
+                             <li><a href="#"><i class="fa fa-twitter"></i></a>
+                             </li>
+                             <li><a href="#"><i class="fa fa-facebook"></i></a>
+                             </li>
+                             <li><a href="#"><i class="fa fa-linkedin"></i></a>
+                             </li>
+                         </ul>
+                     </div>
+                 </div>
+                 <div class="col-sm-4">
+                     <div class="team-member">
                        <img class="img-responsive img-circle" alt="">
-                          <%= image_tag('david.png', width: '100%') %>
-                     </img>
-                       <h4>DAVID PAUL</h4>
-                       <p class="text-muted">Developer</p>
-                       <ul class="list-inline social-buttons">
-                           <li><a href="#"><i class="fa fa-twitter"></i></a>
-                           </li>
-                           <li><a href="#"><i class="fa fa-facebook"></i></a>
-                           </li>
-                           <li><a href="#"><i class="fa fa-linkedin"></i></a>
-                           </li>
-                       </ul>
-                   </div>
-               </div>
-               <div class="col-sm-4">
-                   <div class="team-member">
-                       <img class="img-responsive img-circle" alt="">
-                          <%= image_tag('tai.png', width: '100%') %>
+                          <%= image_tag('clive.png', width: '100%') %>
                         </img>
-                       <h4>TAE YOUNG KIM</h4>
-                       <p class="text-muted">Developer</p>
-                       <ul class="list-inline social-buttons">
-                           <li><a href="#"><i class="fa fa-twitter"></i></a>
-                           </li>
-                           <li><a href="#"><i class="fa fa-facebook"></i></a>
-                           </li>
-                           <li><a href="#"><i class="fa fa-linkedin"></i></a>
-                           </li>
-                       </ul>
-                   </div>
-               </div>
-               <div class="col-sm-4">
-                   <div class="team-member">
-                     <img class="img-responsive img-circle" alt="">
-                        <%= image_tag('clive.png', width: '100%') %>
-                      </img>
-                       <h4>CLIVE YIP</h4>
-                       <p class="text-muted">Developer</p>
-                       <ul class="list-inline social-buttons">
-                           <li><a href="#"><i class="fa fa-twitter"></i></a>
-                           </li>
-                           <li><a href="#"><i class="fa fa-facebook"></i></a>
-                           </li>
-                           <li><a href="#"><i class="fa fa-linkedin"></i></a>
-                           </li>
-                       </ul>
-                   </div>
-               </div>
-           </div>
-       </div>
-   </section>
+                         <h4>CLIVE YIP</h4>
+                         <p class="text-muted">Developer</p>
+                         <ul class="list-inline social-buttons">
+                             <li><a href="#"><i class="fa fa-twitter"></i></a>
+                             </li>
+                             <li><a href="#"><i class="fa fa-facebook"></i></a>
+                             </li>
+                             <li><a href="#"><i class="fa fa-linkedin"></i></a>
+                             </li>
+                         </ul>
+                     </div>
+                 </div>
+             </div>
+         </div>
+      </section>
 
       <!-- Contact Section -->
       <section id="contact" class="container content-section text-center">
@@ -212,12 +228,8 @@
                   <p>Copyright &copy; GetGO 2016</p>
               </div>
           </footer>
-          <%= javascript_include_tag "https://code.jquery.com/jquery-3.1.1.min.js" %>
-               <%= javascript_include_tag "https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.3/jquery.easing.min.js" %>
-               <%= javascript_include_tag "https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" %>
-               <%= javascript_include_tag "application", "data-turbolinks-track" => "reload" %>
+        </section>
+      <%= javascript_include_tag "application", "data-turbolinks-track" => "reload" %>
+    </body>
 
-
-        </body>
-      </section>
 </html>

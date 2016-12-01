@@ -1,0 +1,31 @@
+
+<div class="jumbotron" style="background-color:#1c293f; border:solid #f9f8f4">
+  <% Time.zone = 'Eastern Time (US & Canada)' %>
+  <p> The current time is: <%= Time.zone.now.strftime("%I:%M %p")%> </p>
+
+  <table class="table">
+    <tr>
+      <th>#</th>
+      <th>Time leaving origin: <%= @userSelectedFromStop %></th>
+    </tr>
+    <% if @allTrainsNotDeparted.length >= 3 %>
+      <tr>
+        <td class="active">1</td>
+        <td class="active"><%= @allTrainsNotDeparted[0] %></td>
+      </tr>
+      <tr>
+        <td>2</td>
+        <td><%= @allTrainsNotDeparted[1] %></td>
+      </tr>
+      <tr>
+        <td>3</td>
+        <td><%= @allTrainsNotDeparted[2] %></td>
+      </tr>
+    <% end> %>
+  </table>
+
+  <p> Full schedule: </p>
+  <% @allTrains.each do |element| %>
+    <li><%= element.strftime("%I:%M %p") %></li>
+  <% end %>
+</div>

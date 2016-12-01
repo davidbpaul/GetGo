@@ -6,7 +6,7 @@ class SessionsController < ApplicationController
   def create
     if user = User.authenticate_with_credentials(params[:email], params[:password])
       session[:user_id] = user.id
-      redirect_to schedules_path
+      redirect_to schedules_index_path
     else
       flash[:notice] = 'Incorrect email or password'
       redirect_to login_path

@@ -14,9 +14,12 @@ Rails.application.routes.draw do
 
   # resources :preferences
   resources :schedules, only: :index
-  get 'departure/index'
-  post 'departure/index'
-  post 'departure/getUserDateAndRoute'
-  post 'departure/getRouteVariant'
-  post 'departure/getFromToStops'
+
+
+  # resources :schedules, only: :index
+  get 'schedules/index'
+  post 'schedules/index'
+  post 'schedules/getUserDateAndRoute'
+  post 'schedules/getRouteVariant'
+  post 'schedules/getFromToStops'
 end

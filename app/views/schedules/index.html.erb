@@ -1,3 +1,30 @@
-<div class="jumbotron">
-  <h1>schedules#index</h1>
+<div class="jumbotron" style="background-color:#1c293f; border:solid #f9f8f4">
+
+    <% if current_user%>
+      <% pref = Preference.where(user_id: current_user.id) %>
+      <p> you are a current user </p>
+
+      <%= link_to "See schedule based on your preference",
+        schedules_getFromToStops_path(
+          :select_date => "20161201",
+          :select_route => pref.first.route,
+          :select_route_variant => pref.first.route_variant,
+          :select_to_stop => pref.first.to_stop,
+          :select_from_stop => pref.first.from_stop
+        ), :method => :post
+      %>
+    <% end %>
+
+    <div class="form-group">
+      <%= form_tag(controller: "schedules", action: "getUserDateAndRoute", method: "post") do %>
+        <%= label_tag(:select_date_label, "Pick a date:") %>
+        <%= Time.zone = 'Eastern Time (US & Canada)' %>
+        <%= select_date Time.zone.now, {prefix: :start_date}, {class: "form-control"} %>
+        </br>
+        <%= label_tag(:select_route_label, "Select a route:") %>
+        <%= select_tag(:select_route, options_for_select(@route_values), {class: "form-control"}) %>
+        </br>
+        <%= submit_tag("Submit form", {class: "btn btn-primary btn-lg outline"}) %>
+      <% end %>
+    </div>
 </div>
