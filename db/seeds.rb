@@ -12,12 +12,12 @@ puts 'Re-creating Users ...'
 
 # User.destroy_all
 
-user1 = User.create!(first_name: 'Amy', last_name: 'A', email: 'amy@example.com', password: '1', password_confirmation: '1')
-user2 = User.create!(first_name: 'Bob', last_name: 'B', email: 'bob@example.com', password: '1', password_confirmation: '1')
+user1 = User.create!(first_name: 'TAE', last_name: 'Kim', email: 'ty2kim@example.com', password: '123456', password_confirmation: '123456')
+# user2 = User.create!(first_name: 'Bob', last_name: 'B', email: 'bob@example.com', password: '1', password_confirmation: '1')
 
 puts 'Re-creating Preferences ...'
 
-Preference.destroy_all
+# Preference.destroy_all
 
-Preference.create!(user_id: user1.id, route: '258-MI', route_variant: 'MI', from_stop: 'UN', to_stop: 'SR')
+# Preference.create!(user_id: user1.id, route: '258-MI', route_variant: 'MI', from_stop: 'UN', to_stop: 'SR')
 puts 'DONE!'

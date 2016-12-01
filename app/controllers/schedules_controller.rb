@@ -50,8 +50,9 @@ class SchedulesController < ApplicationController
     @userSelectedRouteVariant = params['select_route_variant']
     @userSelectedToStop = params['select_to_stop']
     @userSelectedFromStop = params['select_from_stop']
+
     @arrivalTimes = getArrivalTimes(@userSelectedDate, @userSelectedRoute, @userSelectedRouteVariant, @userSelectedToStop, @userSelectedFromStop)
-    @departureTimes = getDepartureTimes(@userSelectedDate, @userSelectedRoute, @userSelectedRouteVariant, @userSelectedToStop, @userSelectedFromStop)
+    # @departureTimes = getDepartureTimes(@userSelectedDate, @userSelectedRoute, @userSelectedRouteVariant, @userSelectedToStop, @userSelectedFromStop)
 
     @allTrainsNotDeparted, @allTrains = getFirstThreeTrains(@arrivalTimes, @userSelectedDate)
     render 'arrival-times'

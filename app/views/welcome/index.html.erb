@@ -1,7 +1,7 @@
 <h1 class="brand-heading">Get Go</h1>
 <% if current_user %>
   <%= link_to "Logout", logout_path, class: "btn btn-warning" %>
-  <%= link_to "Go Back", schedules_index_path, class: "btn btn-success" %>
+  <%= link_to "Get Schedule", schedules_index_path, class: "btn btn-success" %>
 <% else %>
   <p class="intro-text">GO transit schedule finder for all Toronto Commuters.</p>
   <%= link_to 'Login', login_path, class: 'btn btn-info btn-lg' %>

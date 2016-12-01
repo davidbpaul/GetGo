@@ -4,8 +4,8 @@
 
   <table class="table">
     <tr>
-      <th style="vertical-align: middle;">#</th>
-      <th style="vertical-align: middle;">Time leaving origin: <%= @userSelectedFromStop %></th>
+      <th>#</th>
+      <th>Time leaving origin: <%= @userSelectedFromStop %></th>
     </tr>
     <% if @allTrainsNotDeparted.length >= 3 %>
       <tr>
@@ -20,11 +20,13 @@
         <td>3</td>
         <td><%= @allTrainsNotDeparted[2].strftime("%I:%M %p") %></td>
       </tr>
-    <% end> %>
+    <% end %>
   </table>
 
   <p> Full schedule: </p>
-  <% @allTrains.each do |element| %>
-    <li><%= element.strftime("%I:%M %p") %></li>
-  <% end %>
+   <% @allTrains.each do |element| %>
+     <li><%= element.strftime("%I:%M %p") %></li>
+   <% end %>
+
+
 </div>
