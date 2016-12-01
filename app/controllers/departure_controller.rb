@@ -46,7 +46,6 @@ class DepartureController < ApplicationController
     @userSelectedFromStop = params['select_from_stop']
     @arrivalTimes = getArrivalTimes(@userSelectedDate, @userSelectedRoute, @userSelectedRouteVariant, @userSelectedToStop, @userSelectedFromStop)
     @departureTimes = getDepartureTimes(@userSelectedDate, @userSelectedRoute, @userSelectedRouteVariant, @userSelectedToStop, @userSelectedFromStop)
-
     @timenow = DateTime.now.in_time_zone("Eastern Time (US & Canada)")
 
     @allTrainsNotDeparted, @allTrains = getFirstThreeTrains(@arrivalTimes, @timenow)
@@ -230,4 +229,6 @@ class DepartureController < ApplicationController
     return allTrainsNotDeparted.reverse, allTrains.reverse
 
   end
+
+
 end
