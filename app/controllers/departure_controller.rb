@@ -243,7 +243,7 @@ class DepartureController < ApplicationController
       end
     end
 
-    puts"iuuhhh"
+    puts"allTrainsNotDeparted"
     puts allTrainsNotDeparted.reverse
     puts"allTrains"
     puts allTrains.reverse
@@ -254,14 +254,14 @@ class DepartureController < ApplicationController
   end
 
 
-puts--------get top 3 arrivalTimes --------
+puts "--------get top 3 arrivalTimes --------"
   def match(arrivalTimes, departureTimes, allTrainsNotDeparted)
     Time.zone = 'Eastern Time (US & Canada)'
     allTrainsDeparted = []
     allTrainsArrived = []
     topArrivalTrains = []
     topDepartureTrains = []
-puts --------get ActiveSupport::TimeZone for all departing times --------
+puts "--------get ActiveSupport::TimeZone for all departing times --------"
     departureTimes.each do |time|
       departSplit = time.split(":")  # "21:00:00" -> ["21", "00", "00"]
       if (departSplit[0].to_i >= 24)
@@ -277,7 +277,7 @@ puts --------get ActiveSupport::TimeZone for all departing times --------
         allTrainsDeparted << departDT
     end
       puts allTrainsArrived
-  puts --------get ActiveSupport::TimeZone for all arrival times--------
+  puts "--------get ActiveSupport::TimeZone for all arrival times--------"
     arrivalTimes.each do |time|
       arriveSplit = time.split(":")  # "21:00:00" -> ["21", "00", "00"]
       if (arriveSplit[0].to_i >= 24)
@@ -292,19 +292,19 @@ puts --------get ActiveSupport::TimeZone for all departing times --------
         end
         allTrainsArrived << arriveDT
       end
-  puts --------get index for all arrival times--------
+  puts "--------get index for all arrival times--------"
     arrivalTrain = Hash[arrivalTimes.map.with_index.to_a]
-    puts --------get index for all departureTimes times--------
+    puts "--------get index for all departureTimes times--------"
     departureTrain = Hash[departureTimes.map.with_index.to_a]
     puts "arrival train"
     puts arrivalTrain
-    puts --------get index for all departureTimes times in the top 3--------
+    puts "--------get index for all departureTimes times in the top 3--------"
     allTrainsNotDeparted.each do |k|
       puts "arrive"
       puts k
       topArrivalTrains << arrivalTrain.find{|key, hash| key["route"] == k}
     end
-  puts --------get index for all arrivalTimes times in the top in the top 3--------
+  puts "--------get index for all arrivalTimes times in the top in the top 3--------"
     topArrivalTrains.each do |k, val|
       puts "dep"
       puts k
@@ -312,7 +312,7 @@ puts --------get ActiveSupport::TimeZone for all departing times --------
       puts val
       topDepartureTrains << departureTrain.find{|key, index| index["route"] == val}
     end
-    puts --------get value for all arrivalTimes times in the top in the top 3--------
+    puts "--------get value for all arrivalTimes times in the top in the top 3--------"
     #
     # puts "top arr"
     # puts topArrivalTrains
