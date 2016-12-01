@@ -1,7 +1,7 @@
 
 <div class="jumbotron" style="background-color:#1c293f; border:solid #f9f8f4">
   <div class="form-group">
-    <%= form_tag(controller: "departure", action: "getRouteVariant", method: "post") do %>
+    <%= form_tag(controller: "schedules", action: "getRouteVariant", method: "post") do %>
       <%= label_tag(:select_route_variant_label, "Pick a route variant:") %>
       <%= hidden_field_tag(:select_date, @userSelectedDate) %>
       <%= hidden_field_tag(:select_route, @userSelectedRoute) %>

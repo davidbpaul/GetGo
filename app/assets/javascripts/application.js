@@ -6,8 +6,10 @@
 
 //= require jquery
 //= require jquery_ujs
+//= require jquery.easing
 //= require turbolinks
 //= require_tree .
+//= require bootstrap-sprockets
 
 
 // jQuery to collapse the navbar on scroll
@@ -81,10 +83,70 @@ $('.tab a').on('click', function (e) {
 
 });
 
+// 1. Routes 2. RouteVariant 3. Stops
+// Add 2 more disabled select tags
+// Client: On selectOneChange, API call to /routes/:id/trips
+// Server: Takes Route id, loops through to find relevant data
+// Server: Returns data
+// Client: Receives array of data in done() method
+// Client: Loop through array, appending <option> tags with data
 
-//
-// $( ".auto_text_field" ).autocomplete({
-//   source: ['foo', 'food', 'bar']
-// });
+// event listener for selectOne
+var route = '';
+var variant = '';
+var fromStop = '';
+var toStop = '';
 
-// $( ".auto_text_field" ).text("example text");
+function createVariantElement (variant) {
+  var $option = $('<option></option>').attr('value', variant).text(variant);
+  return $option
+}
+
+$('#route_select').on('change', function(ev) {
+  $.ajax({
+    url: "http://localhost:3000/routes/" + this.value + "/trips",
+    type: "GET"
+  })
+  .done(function (data) {
+    var trips = data['trips'];
+    var variantsList = [];
+    for (var i = 0; i < trips.length; i++) {
+      var routeVariant = trips[i]['route_variant'];
+      if (variantsList.indexOf(routeVariant) == -1) {
+        variantsList.push(routeVariant);
+      }
+    }
+    $('#route_variant_select').empty();
+    $('#route_variant_select').append($('<option></option>').text('Select a Route Number'));
+    variantsList.forEach(function (variant) {
+      $('#route_variant_select').append(createVariantElement(variant));
+    });
+    $('#route_variant_select').prop("disabled", false);
+  })
+  .fail(function (err){
+    console.log(err);
+  });
+});
+
+$('#route_variant_select').on('change', function(ev) {
+  $.ajax({
+    url: "http://localhost:3000/trips/" + this.value + "/stops",
+    type: "GET"
+  })
+  .done(function (data) {
+    var stops = data['stops'];
+    // var stopsList = [];
+    // for (var i = 0; i < stops.length; i++) {
+    //   var stopId = stops[i]['id'];
+    //   var stopName = stops[i]['name'];
+    // }
+    $('#from_stop_select').empty();
+    $('#from_stop_select').append($('<option></option>').text('Select a Starting Stop'));
+  })
+  .fail(function (err) {
+
+  });
+});
+
+// in this file:
+// create event listeners for selectTwo and selectThree
