@@ -9,6 +9,7 @@
 //= require turbolinks
 //= require_tree .
 
+
 // jQuery to collapse the navbar on scroll
 function collapseNavbar() {
     if ($(".navbar").offset().top > 50) {
@@ -79,3 +80,11 @@ $('.tab a').on('click', function (e) {
   $(target).fadeIn(600);
 
 });
+
+
+//
+// $( ".auto_text_field" ).autocomplete({
+//   source: ['foo', 'food', 'bar']
+// });
+
+// $( ".auto_text_field" ).text("example text");

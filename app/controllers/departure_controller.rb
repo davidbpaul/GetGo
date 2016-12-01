@@ -215,19 +215,24 @@ class DepartureController < ApplicationController
 
   def getFirstThreeTrains(arrivalTimes, timeNow)
 
+    Time.zone = 'Eastern Time (US & Canada)'
+
     allTrains = []
     allTrainsNotDeparted = []
 
     arrivalTimes.each do |arrive|
-      arriveDT = (DateTime.strptime(arrive, "%H:%M:%S") + 5.hours).in_time_zone("Eastern Time (US & Canada)")
+      # arriveDT = (DateTime.strptime(arrive, "%H:%M:%S") + 5.hours).in_time_zone("Eastern Time (US & Canada)")
+      arriveDT = Time.zone.strptime(arrive, "%H:%M:%S")
       allTrains << arriveDT
-      if arriveDT.to_i > timeNow.to_i
+      if arriveDT > Time.zone.now
         allTrainsNotDeparted << arriveDT
       end
     end
 
     return allTrainsNotDeparted.reverse, allTrains.reverse
 
+    # Time.zone.now
+    # Time.zone.strptime("21:00:00", "%H:%M:%S")
   end
 
 
