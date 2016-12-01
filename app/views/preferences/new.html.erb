@@ -1,12 +1,22 @@
 <div class="jumbotron" id="preferred_route">
-  <%#= @response %>
-  <%#= @routes %>
-  <%= form_tag({ controller: "preferences", action: "create"}, { method: "post", remote: true, datatype: 'script' }) do %>
-    <%= label_tag('preference[route]', "Select a route:") %>
-    <%= select_tag('preference[route]', options_for_select(@routes), id: 'route_select') %>
+  <h2>Save Your Preference</h2>
 
-    <%= submit_tag "Submit form", class: "btn btn-success" %>
+  <%= form_tag({ controller: "preferences", action: "create"}, { method: "post", remote: true, datatype: 'script' }) do %>
+    <div class="form-group">
+      <%= select_tag 'preference[route]', options_for_select(@routes), id: 'route_select', class: 'form-control', include_blank: 'Select a Route' %>
+    </div>
+    <div class="form-group">
+      <%= select_tag 'preference[route_variant]', "<option></option>".html_safe, id: 'route_variant_select', class: 'form-control', disabled: true, include_blank: 'Select Route First!' %>
+    </div>
+    <div class="form-group">
+      <%= select_tag 'preference[from_stop]', "<option></option>".html_safe, id: 'from_stop_select', class: 'form-control', disabled: true, include_blank: "Select Route Number First!" %>
+    </div>
+    <div class="form-group">
+      <%= select_tag 'preference[to_stop]', "<option></option>".html_safe, id: 'to_stop_select', class: 'form-control', disabled: true, include_blank: "Select 'from' Stop First!" %>
+    </div>
+      <%= submit_tag "Submit form", class: "btn btn-success" %>
   <% end %>
+
 
   <%#= form_tag controller: "preferences", action: "create", method: "POST" do %>
     <%#= label_tag() %>
