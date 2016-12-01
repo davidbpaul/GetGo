@@ -48,6 +48,7 @@ class DepartureController < ApplicationController
     @departureTimes = getDepartureTimes(@userSelectedDate, @userSelectedRoute, @userSelectedRouteVariant, @userSelectedToStop, @userSelectedFromStop)
     @timenow = DateTime.now.in_time_zone("Eastern Time (US & Canada)")
     @allTrainsNotDeparted, @allTrains = getFirstThreeTrains(@arrivalTimes, @timenow)
+    @matching, @allArrived = match(@arrivalTimes, @departureTimes, @allTrainsNotDeparted)
     render 'arrival-times'
   end
 
@@ -251,6 +252,127 @@ class DepartureController < ApplicationController
     # Time.zone.now
     # Time.zone.strptime("21:00:00", "%H:%M:%S")
   end
+
+
+puts--------get top 3 arrivalTimes --------
+  def match(arrivalTimes, departureTimes, allTrainsNotDeparted)
+    Time.zone = 'Eastern Time (US & Canada)'
+    allTrainsDeparted = []
+    allTrainsArrived = []
+    topArrivalTrains = []
+    topDepartureTrains = []
+puts --------get ActiveSupport::TimeZone for all departing times --------
+    departureTimes.each do |time|
+      departSplit = time.split(":")  # "21:00:00" -> ["21", "00", "00"]
+      if (departSplit[0].to_i >= 24)
+        depart24 = []
+        depart24[0] = (departSplit[0].to_i - 24).to_s
+        depart24[1] = departSplit[1]
+        depart24[2] = departSplit[2]
+        depart24join = depart24.join(":")
+        departDT = Time.zone.strptime(depart24join, "%H:%M:%S") + 1.days
+      else
+        departDT = Time.zone.strptime(time, "%H:%M:%S")
+      end
+        allTrainsDeparted << departDT
+    end
+      puts allTrainsArrived
+  puts --------get ActiveSupport::TimeZone for all arrival times--------
+    arrivalTimes.each do |time|
+      arriveSplit = time.split(":")  # "21:00:00" -> ["21", "00", "00"]
+      if (arriveSplit[0].to_i >= 24)
+        arrive24 = []
+        arrive24[0] = (arriveSplit[0].to_i - 24).to_s
+        arrive24[1] = arriveSplit[1]
+        arrive24[2] = arriveSplit[2]
+        arrive24join = arrive24.join(":")
+        arriveDT = Time.zone.strptime(arrive24join, "%H:%M:%S") + 1.days
+        else
+        arriveDT = Time.zone.strptime(arrive, "%H:%M:%S")
+        end
+        allTrainsArrived << arriveDT
+      end
+  puts --------get index for all arrival times--------
+    arrivalTrain = Hash[arrivalTimes.map.with_index.to_a]
+    puts --------get index for all departureTimes times--------
+    departureTrain = Hash[departureTimes.map.with_index.to_a]
+    puts "arrival train"
+    puts arrivalTrain
+    puts --------get index for all departureTimes times in the top 3--------
+    allTrainsNotDeparted.each do |k|
+      puts "arrive"
+      puts k
+      topArrivalTrains << arrivalTrain.find{|key, hash| key["route"] == k}
+    end
+  puts --------get index for all arrivalTimes times in the top in the top 3--------
+    topArrivalTrains.each do |k, val|
+      puts "dep"
+      puts k
+      puts "index"
+      puts val
+      topDepartureTrains << departureTrain.find{|key, index| index["route"] == val}
+    end
+    puts --------get value for all arrivalTimes times in the top in the top 3--------
+    #
+    # puts "top arr"
+    # puts topArrivalTrains
+    # puts "top dep"
+    # puts topDepartureTrains
+  end
+
+
+# ///////////////////////////////////////////////////////////////////////////
+
+
+
+  # def match(arrivalTimes, departureTimes, allTrainsNotDeparted)
+  #   # get departed index's
+  #   # byebug
+  #   allDeparted = Hash[arrivalTimes.map.with_index.to_a]
+  #   # get arrival index's
+  #   allArrived = Hash[departureTimes.map.with_index.to_a]
+  #
+  #
+  #   # get top 3 arrived
+  #   puts "allDeparted"
+  #   puts  allDeparted
+  #   puts "allArrived"
+  #   puts allArrived
+  #   selected = []
+  #   topDepartedIndex = []
+  #   # compare allDeparted with top 3 departed times in allTrainsNotDeparted
+  #   # return index of top 3 departed times
+  #   # get top 3 departed
+  #   topThree = allTrainsNotDeparted
+  #   puts "------top 3------------"
+  #   puts topThree
+  #   # First - get top 3 departed time in allTrainsNotDeparted
+  #   # Second, inside of allDeparted loop, loop through top 3 times of allTrainsNotDeparted
+  #   #
+  #   # topThree.each do |x|
+  #   #   allDeparted.each do |y|
+  #   #     sameRoutes = x & y
+  #   #     puts "success------"
+  #   #     puts sameRoutes
+  #   #   end
+  #   # end
+  #
+  #   # allDeparted.each do |time|
+  #   #   topThree.each do |top|
+  #   #     if time == top
+  #   #       k = time[:key1]
+  #   #       topDepartedIndex.push(k)
+  #   #     end
+  #   #   end
+  #   # end
+  # #
+  # #   topDepartedIndex.each do |arrive|
+  # #     allArrived.each do |all|
+  # #     end
+  # #
+  # #   end
+  # #     # selected << .find { |st| st['stop_id'] == toStop}['arrival_time'
+  # end
 
 
 end
