@@ -47,7 +47,8 @@ class DepartureController < ApplicationController
     @arrivalTimes = getArrivalTimes(@userSelectedDate, @userSelectedRoute, @userSelectedRouteVariant, @userSelectedToStop, @userSelectedFromStop)
     @departureTimes = getDepartureTimes(@userSelectedDate, @userSelectedRoute, @userSelectedRouteVariant, @userSelectedToStop, @userSelectedFromStop)
 
-    @timenow = DateTime.now.in_time_zone("Eastern Time (US & Canada)")
+    Time.zone = 'Eastern Time (US & Canada)'
+    @timenow = Time.zone.now
 
     @allTrainsNotDeparted, @allTrains = getFirstThreeTrains(@arrivalTimes, @timenow)
     render 'arrival-times'
@@ -222,8 +223,20 @@ class DepartureController < ApplicationController
     allTrainsNotDeparted = []
 
     arrivalTimes.each do |arrive|
+
+      arriveSplit = arrive.split(":")  # "21:00:00" -> ["21", "00", "00"]
+      if (arriveSplit[0].to_i >= 24)
+        arrive24 = []
+        arrive24[0] = (arriveSplit[0].to_i - 24).to_s
+        arrive24[1] = arriveSplit[1]
+        arrive24[2] = arriveSplit[2]
+        arrive24join = arrive24.join(":")
+        arriveDT = Time.zone.strptime(arrive24join, "%H:%M:%S") + 1.days
+      else
+        arriveDT = Time.zone.strptime(arrive, "%H:%M:%S")
+      end
+
       # arriveDT = (DateTime.strptime(arrive, "%H:%M:%S") + 5.hours).in_time_zone("Eastern Time (US & Canada)")
-      arriveDT = Time.zone.strptime(arrive, "%H:%M:%S")
       allTrains << arriveDT
       if arriveDT > Time.zone.now
         allTrainsNotDeparted << arriveDT

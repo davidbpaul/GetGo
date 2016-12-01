@@ -1,6 +1,7 @@
 
 <div class="jumbotron" style="background-color:#1c293f; border:solid #f9f8f4">
-  <p> The current time is: <%= @timenow %> </p>
+  <%= Time.zone = 'Eastern Time (US & Canada)' %>
+  <p> The current time is: <%= Time.zone.now.strftime("%I:%M %p")%> </p>
 
   <table class="table">
     <tr>
@@ -27,6 +28,6 @@
 
   <p> Full schedule: </p>
   <% @allTrains.each do |element| %>
-    <li><%= element %></li>
+    <li><%= element.strftime("%I:%M %p") %></li>
   <% end %>
 </div>
