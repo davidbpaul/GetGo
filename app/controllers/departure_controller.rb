@@ -47,7 +47,6 @@ class DepartureController < ApplicationController
     @arrivalTimes = getArrivalTimes(@userSelectedDate, @userSelectedRoute, @userSelectedRouteVariant, @userSelectedToStop, @userSelectedFromStop)
     @departureTimes = getDepartureTimes(@userSelectedDate, @userSelectedRoute, @userSelectedRouteVariant, @userSelectedToStop, @userSelectedFromStop)
     @timenow = DateTime.now.in_time_zone("Eastern Time (US & Canada)")
-
     @allTrainsNotDeparted, @allTrains = getFirstThreeTrains(@arrivalTimes, @timenow)
     render 'arrival-times'
   end
@@ -148,7 +147,6 @@ class DepartureController < ApplicationController
   end
 
   def getArrivalTimes (date, route_id, route_variant, toStop, fromStop)
-
     tripsArray = getTrips(date, route_id, route_variant)
 
     direction_id = getDirection(tripsArray[0], toStop, fromStop)
@@ -170,13 +168,14 @@ class DepartureController < ApplicationController
     arrivalTimes = []
     # Third, for each trip, get the departure_time for the desired stop (by referencing stop_id)
     tripsWithCorrectDirection.each do |trip|
+      if trip != nil
       url = 'https://getgo-api.herokuapp.com/' + '/trips/' + trip['id'] + '/stop_times'
       # https://getgo-api.herokuapp.com/trips/6239-Fri-167/stop_times
       response = HTTParty.get(url)
       stopTimesHash = JSON.parse(response.body)
       stopTimesArray = stopTimesHash['stop_times']
-
       departureTimes << stopTimesArray.find { |st| st['stop_id'] == fromStop}['departure_time']
+      end
     end
     return departureTimes
 
@@ -199,6 +198,7 @@ class DepartureController < ApplicationController
     tripId = [];
     # Third, for each trip, get the departure_time for the desired stop (by referencing stop_id)
     tripsWithCorrectDirection.each do |trip|
+      if trip != nil
         url = 'https://getgo-api.herokuapp.com/' + '/trips/' + trip['id'] + '/stop_times'
       # https://getgo-api.herokuapp.com/trips/6239-Fri-167/stop_times
       response = HTTParty.get(url)
@@ -211,6 +211,7 @@ class DepartureController < ApplicationController
     puts arrivalTimes
     puts tripId
     return arrivalTimes
+    end
   end
 
   def getFirstThreeTrains(arrivalTimes, timeNow)
@@ -221,14 +222,30 @@ class DepartureController < ApplicationController
     allTrainsNotDeparted = []
 
     arrivalTimes.each do |arrive|
+
+      arriveSplit = arrive.split(":")  # "21:00:00" -> ["21", "00", "00"]
+      if (arriveSplit[0].to_i >= 24)
+        arrive24 = []
+        arrive24[0] = (arriveSplit[0].to_i - 24).to_s
+        arrive24[1] = arriveSplit[1]
+        arrive24[2] = arriveSplit[2]
+        arrive24join = arrive24.join(":")
+        arriveDT = Time.zone.strptime(arrive24join, "%H:%M:%S") + 1.days
+      else
+        arriveDT = Time.zone.strptime(arrive, "%H:%M:%S")
+      end
+
       # arriveDT = (DateTime.strptime(arrive, "%H:%M:%S") + 5.hours).in_time_zone("Eastern Time (US & Canada)")
-      arriveDT = Time.zone.strptime(arrive, "%H:%M:%S")
       allTrains << arriveDT
       if arriveDT > Time.zone.now
         allTrainsNotDeparted << arriveDT
       end
     end
 
+    puts"iuuhhh"
+    puts allTrainsNotDeparted.reverse
+    puts"allTrains"
+    puts allTrains.reverse
     return allTrainsNotDeparted.reverse, allTrains.reverse
 
     # Time.zone.now
