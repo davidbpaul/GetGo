@@ -19,5 +19,5 @@ puts 'Re-creating Preferences ...'
 
 Preference.destroy_all
 
-Preference.create!(user_id: user1.id, route: 'route_a', from_stop: 'fstop_a', to_stop: 'tstop_a')
+Preference.create!(user_id: user1.id, route: '258-MI', route_variant: 'MI', from_stop: 'UN', to_stop: 'SR')
 puts 'DONE!'
