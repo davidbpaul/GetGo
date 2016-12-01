@@ -2,6 +2,13 @@ class DepartureController < ApplicationController
   # Run this on http://localhost:3000/welcome/index
   def index
     # ----- Task 1. Get all route names -----
+    if current_user
+      @pref = Preference.where(user_id: current_user.id)
+    end
+
+    # Time.zone.now.strftime("%Y%m%d")
+    byebug
+
     routes = getRoutes
     @route_values = []
     routes.each do |route|
@@ -47,10 +54,7 @@ class DepartureController < ApplicationController
     @arrivalTimes = getArrivalTimes(@userSelectedDate, @userSelectedRoute, @userSelectedRouteVariant, @userSelectedToStop, @userSelectedFromStop)
     @departureTimes = getDepartureTimes(@userSelectedDate, @userSelectedRoute, @userSelectedRouteVariant, @userSelectedToStop, @userSelectedFromStop)
 
-    Time.zone = 'Eastern Time (US & Canada)'
-    @timenow = Time.zone.now
-
-    @allTrainsNotDeparted, @allTrains = getFirstThreeTrains(@arrivalTimes, @timenow)
+    @allTrainsNotDeparted, @allTrains = getFirstThreeTrains(@arrivalTimes, @userSelectedDate)
     render 'arrival-times'
   end
 
@@ -215,7 +219,7 @@ class DepartureController < ApplicationController
     return arrivalTimes
   end
 
-  def getFirstThreeTrains(arrivalTimes, timeNow)
+  def getFirstThreeTrains(arrivalTimes, userSelectedDate)
 
     Time.zone = 'Eastern Time (US & Canada)'
 
