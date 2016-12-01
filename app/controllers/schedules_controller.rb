@@ -1,8 +1,13 @@
-# class SchedulesController
 class SchedulesController < ApplicationController
   # Run this on http://localhost:3000/welcome/index
   def index
     # ----- Task 1. Get all route names -----
+    if current_user
+      @pref = Preference.where(user_id: current_user.id)
+    end
+
+    # Time.zone.now.strftime("%Y%m%d")
+
     routes = getRoutes
     @route_values = []
     routes.each do |route|
@@ -48,9 +53,7 @@ class SchedulesController < ApplicationController
     @arrivalTimes = getArrivalTimes(@userSelectedDate, @userSelectedRoute, @userSelectedRouteVariant, @userSelectedToStop, @userSelectedFromStop)
     @departureTimes = getDepartureTimes(@userSelectedDate, @userSelectedRoute, @userSelectedRouteVariant, @userSelectedToStop, @userSelectedFromStop)
 
-    @timenow = DateTime.now.in_time_zone("Eastern Time (US & Canada)")
-
-    @allTrainsNotDeparted, @allTrains = getFirstThreeTrains(@arrivalTimes, @timenow)
+    @allTrainsNotDeparted, @allTrains = getFirstThreeTrains(@arrivalTimes, @userSelectedDate)
     render 'arrival-times'
   end
 
@@ -86,6 +89,14 @@ class SchedulesController < ApplicationController
 
   def getTrips (date, route_id, route_variant)
     #  First, get all the trips
+
+    # workaround to turn 2016121 to 20161201
+    if (date.length < 8)
+      len = date.length - 1
+      date << date[len]
+      date[len] = "0"
+    end
+
     url = 'https://getgo-api.herokuapp.com/routes/' + route_id + '/trips?date=' + date
     # https://getgo-api.herokuapp.com/routes/258-MI/trips?date=20161202
     response = HTTParty.get(url)
@@ -96,10 +107,10 @@ class SchedulesController < ApplicationController
       |trip| trip['route_variant'] == route_variant
     }
 
-    puts "---------- Task 2a: Trips under the specified route variant ----------"
-    tripsWithCorrectVariant.each do |trip|
-      print "Trip_id: ", trip['id'], ",  Route Variant: ", + trip['route_variant'] + ",  Direction: " + trip['direction_id'] + "\n"
-    end
+    # puts "---------- Task 2a: Trips under the specified route variant ----------"
+    # tripsWithCorrectVariant.each do |trip|
+    #   print "Trip_id: ", trip['id'], ",  Route Variant: ", + trip['route_variant'] + ",  Direction: " + trip['direction_id'] + "\n"
+    # end
     return tripsWithCorrectVariant
   end
 
@@ -215,20 +226,37 @@ class SchedulesController < ApplicationController
     return arrivalTimes
   end
 
-  def getFirstThreeTrains(arrivalTimes, timeNow)
+  def getFirstThreeTrains(arrivalTimes, userSelectedDate)
+
+    Time.zone = 'Eastern Time (US & Canada)'
 
     allTrains = []
     allTrainsNotDeparted = []
 
     arrivalTimes.each do |arrive|
-      arriveDT = (DateTime.strptime(arrive, "%H:%M:%S") + 5.hours).in_time_zone("Eastern Time (US & Canada)")
+
+      arriveSplit = arrive.split(":")  # "21:00:00" -> ["21", "00", "00"]
+      if (arriveSplit[0].to_i >= 24)
+        arrive24 = []
+        arrive24[0] = (arriveSplit[0].to_i - 24).to_s
+        arrive24[1] = arriveSplit[1]
+        arrive24[2] = arriveSplit[2]
+        arrive24join = arrive24.join(":")
+        arriveDT = Time.zone.strptime(arrive24join, "%H:%M:%S") + 1.days
+      else
+        arriveDT = Time.zone.strptime(arrive, "%H:%M:%S")
+      end
+
+      # arriveDT = (DateTime.strptime(arrive, "%H:%M:%S") + 5.hours).in_time_zone("Eastern Time (US & Canada)")
       allTrains << arriveDT
-      if arriveDT.to_i > timeNow.to_i
+      if arriveDT > Time.zone.now
         allTrainsNotDeparted << arriveDT
       end
     end
 
     return allTrainsNotDeparted.reverse, allTrains.reverse
 
+    # Time.zone.now
+    # Time.zone.strptime("21:00:00", "%H:%M:%S")
   end
 end

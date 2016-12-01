@@ -36,6 +36,7 @@ gem 'bootstrap-sass'
 # font-awesome
 gem 'font-awesome-rails'
 
+
 # httparty to make request to api
 gem 'httparty'
 
