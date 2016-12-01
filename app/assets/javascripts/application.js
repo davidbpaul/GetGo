@@ -82,11 +82,9 @@ $('.tab a').on('click', function (e) {
 
 });
 
-
-
 $('#route_select').on('change', function(ev) {
   $.ajax({
-    url: "http://localhost:3000/routes/" + this.value,
+    url: "http://localhost:3000/routes/" + this.value + "/trips ",
     type: "GET"
   })
   .done(function (data){
