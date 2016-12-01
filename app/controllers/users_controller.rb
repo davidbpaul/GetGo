@@ -7,7 +7,7 @@ class UsersController < ApplicationController
     user = User.new(user_params)
     if user.save
       session[:user_id] = user.id
-      redirect_to schedules_path
+      redirect_to schedules_index_path
     else
       flash[:notice] = user.errors.full_messages.to_s
       redirect_to signup_path

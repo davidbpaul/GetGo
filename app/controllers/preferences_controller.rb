@@ -57,10 +57,13 @@ class PreferencesController < ApplicationController
   end
 
   def destroy
-    user = User.find params[:user_id]
-    # preference = Preference.find_by_user_id params[:user_id]
-    preference = user.preference
-    preference.destroy
+    # user = User.find params[:user_id]
+    # # preference = Preference.find_by_user_id params[:user_id]
+    # preference = user.preference
+    # preference.destroy
+    # redirect_to schedules_index_path
+
+    Preference.where(user_id: params[:user_id]).destroy_all
     redirect_to schedules_index_path
   end
 
