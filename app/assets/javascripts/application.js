@@ -85,7 +85,7 @@ $('.tab a').on('click', function (e) {
 var fromStop = '';
 var stops = [];
 var variantList = [];
-var root = "http://localhost:3000";
+var root = "https://getgo-api.herokuapp.com";
 
 function arrayObjectIndexOf(myArray, searchTerm, property) {
     for(var i = 0, len = myArray.length; i < len; i++) {

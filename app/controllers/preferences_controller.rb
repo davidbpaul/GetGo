@@ -9,7 +9,7 @@ class PreferencesController < ApplicationController
 
   def new
     # url = 'https://getgo-api.herokuapp.com/agencies/GO/routes'
-    url = 'http://localhost:3000/agencies/GO/routes'
+    url = 'https://getgo-api.herokuapp.com/agencies/GO/routes'
     response = HTTParty.get(url)
     response_body = JSON.parse response.body
     @routes = []
@@ -20,7 +20,7 @@ class PreferencesController < ApplicationController
   end
 
   def edit
-    url = 'http://localhost:3000/agencies/GO/routes'
+    url = 'https://getgo-api.herokuapp.com/agencies/GO/routes'
     response = HTTParty.get(url)
     response_body = JSON.parse response.body
     @routes = []
