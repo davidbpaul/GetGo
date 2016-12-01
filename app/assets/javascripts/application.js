@@ -95,29 +95,39 @@ var variant = '';
 var fromStop = '';
 var toStop = '';
 
-function createVariantElement (variant) {
-  var $option = $('<option></option>').attr('value', variant).text(variant);
+
+function arrayObjectIndexOf(myArray, searchTerm, property) {
+    for(var i = 0, len = myArray.length; i < len; i++) {
+        if (myArray[i][property] === searchTerm) return i;
+    }
+    return -1;
+}
+
+function createTripElement (trip) {
+  var $option = $('<option></option>').attr('value', trip['id']).text(trip['route_variant']);
+  return $option;
+}
+
+function createStopElement (stop) {
+  var $option = $('<option></option>').attr('value', stop['id']).text(stop['name']);
   return $option
 }
 
-$('#route_select').on('change', function(ev) {
+$('#route_select').on('change', function (ev) {
   $.ajax({
     url: "http://localhost:3000/routes/" + this.value + "/trips",
     type: "GET"
   })
   .done(function (data) {
     var trips = data['trips'];
-    var variantsList = [];
-    for (var i = 0; i < trips.length; i++) {
-      var routeVariant = trips[i]['route_variant'];
-      if (variantsList.indexOf(routeVariant) == -1) {
-        variantsList.push(routeVariant);
-      }
-    }
     $('#route_variant_select').empty();
     $('#route_variant_select').append($('<option></option>').text('Select a Route Number'));
-    variantsList.forEach(function (variant) {
-      $('#route_variant_select').append(createVariantElement(variant));
+    var variantList = [];
+    trips.forEach(function (trip) {
+      if (arrayObjectIndexOf(variantList, trip['route_variant'], 'route_variant') === -1) {
+        variantList.push(trip);
+        $('#route_variant_select').append(createTripElement(trip));
+      }
     });
     $('#route_variant_select').prop("disabled", false);
   })
@@ -126,25 +136,35 @@ $('#route_select').on('change', function(ev) {
   });
 });
 
-$('#route_variant_select').on('change', function(ev) {
+var stops = [];
+
+$('#route_variant_select').on('change', function (ev) {
   $.ajax({
     url: "http://localhost:3000/trips/" + this.value + "/stops",
     type: "GET"
   })
   .done(function (data) {
-    var stops = data['stops'];
-    // var stopsList = [];
-    // for (var i = 0; i < stops.length; i++) {
-    //   var stopId = stops[i]['id'];
-    //   var stopName = stops[i]['name'];
-    // }
+    stops = data['stops'];
     $('#from_stop_select').empty();
     $('#from_stop_select').append($('<option></option>').text('Select a Starting Stop'));
+    stops.forEach(function (stop) {
+      $('#from_stop_select').append(createStopElement(stop));
+    });
+    $('#from_stop_select').prop("disabled", false);
   })
   .fail(function (err) {
-
+    console.log(err);
   });
 });
 
-// in this file:
-// create event listeners for selectTwo and selectThree
+$('#from_stop_select').on('change', function (ev) {
+  var from_stop = this.value;
+  $('#to_stop_select').empty();
+  $('#to_stop_select').append($('<option></option>').text('Select a Destination Stop'));
+  stops.forEach(function (stop) {
+    if (stop['id'] != from_stop) {
+      $('#to_stop_select').append(createStopElement(stop));
+    }
+  });
+  $('#to_stop_select').prop("disabled", false);
+});
